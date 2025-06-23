@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masters Tournament Results</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'masters-green': '#006747',
+                        'masters-light': '#228B5B'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #006747 0%, #228B5B 100%);
+        }
+        .card-shadow {
+            box-shadow: 0 4px 20px rgba(0, 103, 71, 0.1);
+        }
+        .smooth-scroll {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 smooth-scroll">
+    <!-- Header -->
+    <header class="gradient-bg text-white sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <h1 class="text-2xl md:text-3xl font-bold">🏆 Masters Tournament</h1>
+                <button id="darkModeToggle" class="p-2 rounded-lg bg-white/20 hover:bg-white/30 transition-colors">
+                    🌙
+                </button>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="mt-4">
+                <div class="relative">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Search by year (e.g. 2023) or golfer name (e.g. Tiger Woods)"
+                        class="w-full px-4 py-3 pr-12 rounded-lg text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    />
+                    <div class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+                        🔍
+                    </div>
+                </div>
+                <div id="searchSuggestions" class="absolute w-full mt-1 bg-white rounded-lg shadow-lg hidden z-10 max-h-60 overflow-y-auto">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-6">
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="bg-white rounded-lg p-4 card-shadow text-center">
+                <div class="text-2xl font-bold text-masters-green" id="totalYears">--</div>
+                <div class="text-sm text-gray-600">Years of Data</div>
+            </div>
+            <div class="bg-white rounded-lg p-4 card-shadow text-center">
+                <div class="text-2xl font-bold text-masters-green" id="uniqueWinners">--</div>
+                <div class="text-sm text-gray-600">Unique Winners</div>
+            </div>
+            <div class="bg-white rounded-lg p-4 card-shadow text-center">
+                <div class="text-2xl font-bold text-masters-green" id="bestScore">--</div>
+                <div class="text-sm text-gray-600">Best Score</div>
+            </div>
+            <div class="bg-white rounded-lg p-4 card-shadow text-center">
+                <div class="text-2xl font-bold text-masters-green" id="mostWins">--</div>
+                <div class="text-sm text-gray-600">Most Wins</div>
+            </div>
+        </div>
+
+        <!-- Tournament Results -->
+        <div id="tournamentResults" class="space-y-4">
+            <!-- Results will be populated here -->
+        </div>
+
+        <!-- Load More Button -->
+        <div class="text-center mt-8">
+            <button id="loadMoreBtn" class="bg-masters-green text-white px-6 py-3 rounded-lg hover:bg-masters-light transition-colors font-semibold hidden">
+                Load More Years
+            </button>
+        </div>
+    </main>
+
+    <!-- Golfer Bio Modal -->
+    <div id="bioModal" class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <h2 id="bioName" class="text-2xl font-bold text-masters-green"></h2>
+                    <button id="closeBioModal" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+                </div>
+                <div id="bioContent" class="space-y-4">
+                    <!-- Bio content will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel Modal -->
+    <div id="adminModal" class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-white rounded-lg max-w-md w-full">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-masters-green">Add New Tournament Result</h2>
+                    <button id="closeAdminModal" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+                </div>
+                <form id="adminForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Year</label>
+                        <input type="number" id="adminYear" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Winner</label>
+                        <input type="text" id="adminWinner" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Score</label>
+                        <input type="number" id="adminScore" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">To Par</label>
+                        <input type="number" id="adminToPar" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Nationality</label>
+                        <input type="text" id="adminNationality" placeholder="USA" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md">
+                    </div>
+                    <button type="submit" class="w-full bg-masters-green text-white py-2 px-4 rounded-md hover:bg-masters-light transition-colors">
+                        Add Result
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Admin Button -->
+    <button id="adminBtn" class="fixed bottom-6 right-6 bg-masters-green text-white p-3 rounded-full shadow-lg hover:bg-masters-light transition-colors z-40">
+        ⚙️
+    </button>
+
+    <script>
+        // API Configuration - UPDATE THIS URL TO YOUR RENDER BACKEND URL
+        const API_BASE_URL = 'https://your-backend-name.onrender.com'; // CHANGE THIS
+        
+        // App State
+        let currentData = [];
+        let allGolfers = [];
+        let currentStats = {};
+        let displayedItems = 10;
+        let isDarkMode = false;
+        let adminCredentials = null;
+
+        // DOM Elements
+        const searchInput = document.getElementById('searchInput');
+        const searchSuggestions = document.getElementById('searchSuggestions');
+        const tournamentResults = document.getElementById('tournamentResults');
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        const bioModal = document.getElementById('bioModal');
+        const adminModal = document.getElementById('adminModal');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+
+        // API Functions
+        async function fetchFromAPI(endpoint, options = {}) {
+            try {
+                const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...options.headers
+                    },
+                    ...options
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                return await response.json();
+            } catch (error) {
+                console.error('API Error:', error);
+                showErrorMessage('Unable to connect to the database. Please check your connection.');
+                return null;
+            }
+        }
+
+        async function loadTournamentData() {
+            const data = await fetchFromAPI('/tournaments');
+            if (data) {
+                // Convert API response to match frontend format
+                currentData = data.map(item => ({
+                    year: item.year,
+                    winner: item.winner,
+                    score: item.score,
+                    toPar: item.to_par,
+                    nationality: item.nationality
+                }));
+            }
+        }
+
+        async function loadStats() {
+            const stats = await fetchFromAPI('/stats');
+            if (stats) {
+                currentStats = stats;
+            }
+        }
+
+        async function loadGolfers() {
+            const golfers = await fetchFromAPI('/golfers');
+            if (golfers) {
+                allGolfers = golfers;
+            }
+        }
+
+        async function searchAPI(query) {
+            const results = await fetchFromAPI(`/search?q=${encodeURIComponent(query)}`);
+            if (results) {
+                return results.map(item => ({
+                    year: item.year,
+                    winner: item.winner,
+                    score: item.score,
+                    toPar: item.to_par,
+                    nationality: item.nationality
+                }));
+            }
+            return [];
+        }
+
+        async function addTournamentAPI(tournament, credentials) {
+            const authHeader = 'Basic ' + btoa(`${credentials.username}:${credentials.password}`);
+            
+            const response = await fetchFromAPI('/admin/tournaments', {
+                method: 'POST',
+                headers: {
+                    'Authorization': authHeader
+                },
+                body: JSON.stringify({
+                    year: tournament.year,
+                    winner: tournament.winner,
+                    score: tournament.score,
+                    to_par: tournament.toPar,
+                    nationality: tournament.nationality
+                })
+            });
+            
+            return response;
+        }
+
+        function showErrorMessage(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'fixed top-20 right-4 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg z-50';
+            errorDiv.textContent = message;
+            document.body.appendChild(errorDiv);
+            
+            setTimeout(() => {
+                errorDiv.remove();
+            }, 5000);
+        }
+
+        function showSuccessMessage(message) {
+            const successDiv = document.createElement('div');
+            successDiv.className = 'fixed top-20 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50';
+            successDiv.textContent = message;
+            document.body.appendChild(successDiv);
+            
+            setTimeout(() => {
+                successDiv.remove();
+            }, 3000);
+        }
+
+        // Initialize App
+        async function initApp() {
+            // Show loading state
+            tournamentResults.innerHTML = '<div class="text-center py-8"><div class="text-masters-green text-lg">Loading tournament data...</div></div>';
+            
+            // Load data from API
+            await Promise.all([
+                loadTournamentData(),
+                loadStats(),
+                loadGolfers()
+            ]);
+            
+            renderStats();
+            renderResults();
+            setupEventListeners();
+            
+            if (currentData.length > displayedItems) {
+                loadMoreBtn.classList.remove('hidden');
+            }
+        }
+
+        // Render Statistics
+        function renderStats() {
+            if (currentStats.total_years) {
+                document.getElementById('totalYears').textContent = currentStats.total_years;
+                document.getElementById('uniqueWinners').textContent = currentStats.unique_winners;
+                document.getElementById('bestScore').textContent = currentStats.best_score;
+                document.getElementById('mostWins').textContent = currentStats.most_wins;
+            } else {
+                // Fallback calculation if API stats not available
+                const uniqueWinners = new Set(currentData.map(item => item.winner)).size;
+                const bestScore = Math.min(...currentData.map(item => item.score));
+                const winCounts = {};
+                currentData.forEach(item => {
+                    winCounts[item.winner] = (winCounts[item.winner] || 0) + 1;
+                });
+                const mostWins = Math.max(...Object.values(winCounts));
+
+                document.getElementById('totalYears').textContent = currentData.length;
+                document.getElementById('uniqueWinners').textContent = uniqueWinners;
+                document.getElementById('bestScore').textContent = bestScore;
+                document.getElementById('mostWins').textContent = mostWins;
+            }
+        }
+
+        // Render Tournament Results
+        function renderResults(data = currentData.slice(0, displayedItems)) {
+            tournamentResults.innerHTML = '';
+            
+            if (data.length === 0) {
+                tournamentResults.innerHTML = '<div class="text-center py-8"><div class="text-gray-500">No tournaments found.</div></div>';
+                return;
+            }
+            
+            data.forEach(tournament => {
+                const card = createTournamentCard(tournament);
+                tournamentResults.appendChild(card);
+            });
+        }
+
+        // Create Tournament Card
+        function createTournamentCard(tournament) {
+            const card = document.createElement('div');
+            card.className = 'bg-white rounded-lg p-6 card-shadow hover:shadow-lg transition-shadow cursor-pointer';
+            card.setAttribute('data-year', tournament.year);
+            
+            const parColor = tournament.toPar < 0 ? 'text-green-600' : tournament.toPar > 0 ? 'text-red-600' : 'text-gray-600';
+            const parText = tournament.toPar < 0 ? `${tournament.toPar}` : tournament.toPar > 0 ? `+${tournament.toPar}` : 'E';
+            
+            card.innerHTML = `
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+                    <div class="flex-1 mb-4 md:mb-0">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <h3 class="text-2xl font-bold text-masters-green">${tournament.year}</h3>
+                            <span class="bg-masters-green text-white px-2 py-1 rounded text-sm">${tournament.nationality}</span>
+                        </div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-1 hover:text-masters-green transition-colors golfer-name" data-golfer="${tournament.winner}">
+                            ${tournament.winner} 🏆
+                        </h4>
+                        <div class="flex items-center space-x-4 text-sm text-gray-600">
+                            <span>Score: <strong>${tournament.score}</strong></span>
+                            <span class="${parColor} font-semibold">Par: ${parText}</span>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-3xl font-bold ${parColor}">${parText}</div>
+                        <div class="text-sm text-gray-500">to par</div>
+                    </div>
+                </div>
+            `;
+
+            // Add golfer name click handler
+            const golferName = card.querySelector('.golfer-name');
+            golferName.addEventListener('click', (e) => {
+                e.stopPropagation();
+                showGolferBio(tournament.winner);
+            });
+
+            return card;
+        }
+
+        // Show Golfer Bio
+        async function showGolferBio(golferName) {
+            const bioNameEl = document.getElementById('bioName');
+            const bioContentEl = document.getElementById('bioContent');
+            
+            bioNameEl.textContent = golferName;
+            bioContentEl.innerHTML = '<div class="text-center py-4">Loading...</div>';
+            
+            // Try to get golfer data from API first
+            let golferData = null;
+            try {
+                golferData = await fetchFromAPI(`/golfers/${encodeURIComponent(golferName)}`);
+            } catch (error) {
+                console.log('Golfer not found in API, using fallback data');
+            }
+            
+            if (golferData) {
+                bioContentEl.innerHTML = `
+                    <div class="space-y-4">
+                        ${golferData.bio ? `<p class="text-gray-700 leading-relaxed">${golferData.bio}</p>` : '<p class="text-gray-700">Bio information not available.</p>'}
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-gray-50 p-4 rounded-lg text-center">
+                                <div class="text-2xl font-bold text-masters-green">${golferData.masters_wins.length}</div>
+                                <div class="text-sm text-gray-600">Masters Wins</div>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg text-center">
+                                <div class="text-2xl font-bold text-masters-green">${golferData.total_majors || golferData.masters_wins.length}</div>
+                                <div class="text-sm text-gray-600">Total Majors</div>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg text-center">
+                                <div class="text-2xl font-bold text-masters-green">${golferData.turned_pro || 'N/A'}</div>
+                                <div class="text-sm text-gray-600">Turned Pro</div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-masters-green mb-2">Masters Victories:</h4>
+                            <div class="flex flex-wrap gap-2">
+                                ${golferData.masters_wins.map(year => `<span class="bg-masters-green text-white px-3 py-1 rounded-full text-sm">${year}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Fallback to local data
+                const wins = getMastersWins(golferName);
+                bioContentEl.innerHTML = `
+                    <p class="text-gray-700">Bio information not available for ${golferName}.</p>
+                    <div class="mt-4">
+                        <h4 class="font-semibold text-masters-green mb-2">Masters Victories:</h4>
+                        <div class="flex flex-wrap gap-2">
+                            ${wins.map(year => `<span class="bg-masters-green text-white px-3 py-1 rounded-full text-sm">${year}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            bioModal.classList.remove('hidden');
+        }
+
+        // Get Masters wins for a golfer
+        function getMastersWins(golferName) {
+            return currentData.filter(item => item.winner === golferName).map(item => item.year).sort((a, b) => b - a);
+        }
+
+        // Search Functionality
+        async function handleSearch(query) {
+            if (!query.trim()) {
+                displayedItems = 10;
+                renderResults();
+                loadMoreBtn.classList.toggle('hidden', currentData.length <= displayedItems);
+                return;
+            }
+
+            // Try API search first, fall back to local search
+            let results = await searchAPI(query);
+            if (!results || results.length === 0) {
+                results = searchTournaments(query);
+            }
+            
+            renderResults(results);
+            loadMoreBtn.classList.add('hidden');
+        }
+
+        function searchTournaments(query) {
+            const searchTerm = query.toLowerCase().trim();
+            
+            // Check if it's a year search
+            if (/^\d{4}$/.test(searchTerm)) {
+                const year = parseInt(searchTerm);
+                return currentData.filter(item => item.year === year);
+            }
+            
+            // Search by golfer name
+            return currentData.filter(item => 
+                item.winner.toLowerCase().includes(searchTerm)
+            );
+        }
+
+        // Search Suggestions
+        function showSearchSuggestions(query) {
+            if (!query.trim()) {
+                searchSuggestions.classList.add('hidden');
+                return;
+            }
+
+            const suggestions = [];
+            const searchTerm = query.toLowerCase();
+
+            // Add year suggestions
+            currentData.forEach(item => {
+                if (item.year.toString().includes(searchTerm)) {
+                    suggestions.push({ type: 'year', value: item.year, display: `${item.year} - ${item.winner}` });
+                }
+            });
+
+            // Add golfer suggestions
+            const uniqueGolfers = [...new Set(currentData.map(item => item.winner))];
+            uniqueGolfers.forEach(golfer => {
+                if (golfer.toLowerCase().includes(searchTerm)) {
+                    const wins = getMastersWins(golfer);
+                    suggestions.push({ type: 'golfer', value: golfer, display: `${golfer} (${wins.length} wins)` });
+                }
+            });
+
+            if (suggestions.length === 0) {
+                searchSuggestions.classList.add('hidden');
+                return;
+            }
+
+            searchSuggestions.innerHTML = suggestions.slice(0, 8).map(suggestion => 
+                `<div class="px-4 py-2 hover:bg-gray-100 cursor-pointer suggestion-item" data-type="${suggestion.type}" data-value="${suggestion.value}">
+                    ${suggestion.display}
+                </div>`
+            ).join('');
+
+            searchSuggestions.classList.remove('hidden');
+        }
+
+        // Admin Functions
+        async function addTournamentResult(year, winner, score, toPar, nationality = "USA") {
+            if (!adminCredentials) {
+                const username = prompt("Admin Username:");
+                const password = prompt("Admin Password:");
+                
+                if (!username || !password) {
+                    alert("Admin credentials required!");
+                    return;
+                }
+                
+                adminCredentials = { username, password };
+            }
+
+            const newResult = {
+                year: parseInt(year),
+                winner: winner.trim(),
+                score: parseInt(score),
+                toPar: parseInt(toPar),
+                nationality: nationality || "USA"
+            };
+
+            try {
+                const response = await addTournamentAPI(newResult, adminCredentials);
+                
+                if (response) {
+                    // Refresh data from API
+                    await Promise.all([
+                        loadTournamentData(),
+                        loadStats()
+                    ]);
+                    
+                    renderStats();
+                    renderResults();
+                    adminModal.classList.add('hidden');
+                    
+                    showSuccessMessage(`Successfully added ${winner}'s victory in ${year}!`);
+                } else {
+                    throw new Error('Failed to add tournament');
+                }
+            } catch (error) {
+                console.error('Error adding tournament:', error);
+                alert('Failed to add tournament. Please check your credentials and try again.');
+                adminCredentials = null; // Reset credentials on error
+            }
+        }
+
+        // Event Listeners
+        function setupEventListeners() {
+            // Search functionality
+            searchInput.addEventListener('input', async (e) => {
+                const query = e.target.value;
+                await handleSearch(query);
+                showSearchSuggestions(query);
+            });
+
+            searchInput.addEventListener('focus', () => {
+                if (searchInput.value.trim()) {
+                    showSearchSuggestions(searchInput.value);
+                }
+            });
+
+            // Hide suggestions when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!searchInput.contains(e.target) && !searchSuggestions.contains(e.target)) {
+                    searchSuggestions.classList.add('hidden');
+                }
+            });
+
+            // Search suggestions click
+            searchSuggestions.addEventListener('click', async (e) => {
+                if (e.target.classList.contains('suggestion-item')) {
+                    const value = e.target.dataset.value;
+                    const type = e.target.dataset.type;
+                    
+                    if (type === 'year') {
+                        searchInput.value = value;
+                    } else {
+                        searchInput.value = value;
+                    }
+                    
+                    await handleSearch(searchInput.value);
+                    searchSuggestions.classList.add('hidden');
+                }
+            });
+
+            // Load more functionality
+            loadMoreBtn.addEventListener('click', () => {
+                displayedItems += 10;
+                renderResults();
+                
+                if (displayedItems >= currentData.length) {
+                    loadMoreBtn.classList.add('hidden');
+                }
+            });
+
+            // Modal functionality
+            document.getElementById('closeBioModal').addEventListener('click', () => {
+                bioModal.classList.add('hidden');
+            });
+
+            document.getElementById('adminBtn').addEventListener('click', () => {
+                adminModal.classList.remove('hidden');
+            });
+
+            document.getElementById('closeAdminModal').addEventListener('click', () => {
+                adminModal.classList.add('hidden');
+            });
+
+            // Admin form
+            document.getElementById('adminForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const year = document.getElementById('adminYear').value;
+                const winner = document.getElementById('adminWinner').value;
+                const score = document.getElementById('adminScore').value;
+                const toPar = document.getElementById('adminToPar').value;
+                const nationality = document.getElementById('adminNationality').value || 'USA';
+                
+                await addTournamentResult(year, winner, score, toPar, nationality);
+                
+                // Clear form
+                e.target.reset();
+            });
+
+            // Dark mode toggle
+            darkModeToggle.addEventListener('click', toggleDarkMode);
+
+            // Close modals on outside click
+            bioModal.addEventListener('click', (e) => {
+                if (e.target === bioModal) {
+                    bioModal.classList.add('hidden');
+                }
+            });
+
+            adminModal.addEventListener('click', (e) => {
+                if (e.target === adminModal) {
+                    adminModal.classList.add('hidden');
+                }
+            });
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    bioModal.classList.add('hidden');
+                    adminModal.classList.add('hidden');
+                    searchSuggestions.classList.add('hidden');
+                }
+                
+                if (e.key === '/' && e.target !== searchInput) {
+                    e.preventDefault();
+                    searchInput.focus();
+                }
+            });
+        }
+
+        // Dark Mode
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            document.body.classList.toggle('dark', isDarkMode);
+            darkModeToggle.textContent = isDarkMode ? '☀️' : '🌙';
+        }
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
