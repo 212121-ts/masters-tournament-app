@@ -1,4 +1,4 @@
-# Masters Tournament Backend API - Production Version
+# Masters Tournament Backend API - With JSON Import
 # Run with: uvicorn main:app --host 0.0.0.0 --port $PORT
 
 from fastapi import FastAPI, HTTPException, Depends, status
@@ -12,6 +12,7 @@ import sqlite3
 import hashlib
 import secrets
 import os
+import json
 from datetime import datetime
 
 app = FastAPI(title="Masters Tournament API", version="1.0.0")
@@ -29,6 +30,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Serve static files (add this import at the top if not already there)
+if os.path.exists("static"):
+    app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Security
 security = HTTPBasic()
@@ -79,16 +84,62 @@ def init_database():
         )
     ''')
     
-    # Insert initial data if tables are empty
+    # Check if we should load from JSON or use default data
     cursor.execute('SELECT COUNT(*) FROM tournaments')
     if cursor.fetchone()[0] == 0:
-        insert_initial_data(cursor)
+        if os.path.exists('masters_data.json'):
+            print("Loading data from masters_data.json...")
+            load_from_json(cursor)
+        else:
+            print("Loading default data...")
+            insert_initial_data(cursor)
     
     conn.commit()
     conn.close()
 
+def load_from_json(cursor):
+    """Load tournament and golfer data from JSON file"""
+    try:
+        with open('masters_data.json', 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        # Insert tournaments
+        tournaments = data.get('tournaments', [])
+        for tournament in tournaments:
+            cursor.execute('''
+                INSERT OR REPLACE INTO tournaments (year, winner, score, to_par, nationality)
+                VALUES (?, ?, ?, ?, ?)
+            ''', (
+                tournament['year'],
+                tournament['winner'],
+                tournament['score'],
+                tournament['to_par'],
+                tournament['nationality']
+            ))
+        
+        # Insert golfers
+        golfers = data.get('golfers', [])
+        for golfer in golfers:
+            cursor.execute('''
+                INSERT OR REPLACE INTO golfers (name, bio, total_majors, turned_pro, nationality)
+                VALUES (?, ?, ?, ?, ?)
+            ''', (
+                golfer['name'],
+                golfer.get('bio'),
+                golfer.get('total_majors', 0),
+                golfer.get('turned_pro'),
+                golfer.get('nationality')
+            ))
+        
+        print(f"Loaded {len(tournaments)} tournaments and {len(golfers)} golfers from JSON")
+        
+    except Exception as e:
+        print(f"Error loading from JSON: {e}")
+        print("Falling back to default data...")
+        insert_initial_data(cursor)
+
 def insert_initial_data(cursor):
-    # Initial tournament data
+    # Fallback data if JSON not available
     tournaments = [
         (2024, "Scottie Scheffler", 277, -11, "USA"),
         (2023, "Jon Rahm", 276, -12, "ESP"),
@@ -99,27 +150,7 @@ def insert_initial_data(cursor):
         (2018, "Patrick Reed", 273, -15, "USA"),
         (2017, "Sergio García", 279, -9, "ESP"),
         (2016, "Danny Willett", 283, -5, "ENG"),
-        (2015, "Jordan Spieth", 270, -18, "USA"),
-        (2014, "Bubba Watson", 280, -8, "USA"),
-        (2013, "Adam Scott", 279, -9, "AUS"),
-        (2012, "Bubba Watson", 278, -10, "USA"),
-        (2011, "Charl Schwartzel", 274, -14, "RSA"),
-        (2010, "Phil Mickelson", 272, -16, "USA"),
-        (2009, "Ángel Cabrera", 276, -12, "ARG"),
-        (2008, "Trevor Immelman", 280, -8, "RSA"),
-        (2007, "Zach Johnson", 289, 1, "USA"),
-        (2006, "Phil Mickelson", 281, -7, "USA"),
-        (2005, "Tiger Woods", 276, -12, "USA"),
-        (2004, "Phil Mickelson", 279, -9, "USA"),
-        (2003, "Mike Weir", 281, -7, "CAN"),
-        (2002, "Tiger Woods", 276, -12, "USA"),
-        (2001, "Tiger Woods", 272, -16, "USA"),
-        (2000, "Vijay Singh", 278, -10, "FJI"),
-        (1999, "José María Olazábal", 280, -8, "ESP"),
-        (1998, "Mark O'Meara", 279, -9, "USA"),
-        (1997, "Tiger Woods", 270, -18, "USA"),
-        (1996, "Nick Faldo", 276, -12, "ENG"),
-        (1995, "Ben Crenshaw", 274, -14, "USA")
+        (2015, "Jordan Spieth", 270, -18, "USA")
     ]
     
     cursor.executemany(
@@ -127,13 +158,9 @@ def insert_initial_data(cursor):
         tournaments
     )
     
-    # Initial golfer bios
     golfers = [
-        ("Tiger Woods", "Tiger Woods is one of the greatest golfers of all time, with 15 major championships including 5 Masters titles. His 1997 Masters victory at age 21 was historic, winning by 12 strokes with a record-breaking score of 270. Known for his incredible comeback story, including his 2019 Masters victory after personal and physical struggles.", 15, 1996, "USA"),
-        ("Phil Mickelson", "Phil Mickelson, known as 'Lefty', is a fan favorite with 6 major championships including 3 Masters titles. Known for his aggressive play style and short game wizardry, he's one of the most popular players in golf history. His left-handed swing and charismatic personality have made him a household name.", 6, 1992, "USA"),
-        ("Scottie Scheffler", "Scottie Scheffler has emerged as one of golf's brightest stars, becoming the world's #1 ranked player. His consistent play and mental toughness have led to multiple PGA Tour victories including back-to-back Masters wins in 2022 and 2024. Known for his steady demeanor and excellent ball-striking.", 2, 2018, "USA"),
-        ("Bubba Watson", "Bubba Watson is known for his incredible length off the tee and creative shot-making ability. His two Masters victories showcase his unique style and ability to shape shots around Augusta National's challenging layout. Watson's emotional celebrations and colorful personality have made him a fan favorite.", 2, 2003, "USA"),
-        ("Jordan Spieth", "Jordan Spieth burst onto the scene with his dominant 2015 Masters victory, tying Tiger Woods' scoring record of 270. Known for his exceptional putting and course management, Spieth won three majors before age 24. His Masters win was part of an incredible year that included the U.S. Open.", 3, 2012, "USA")
+        ("Tiger Woods", "Tiger Woods is one of the greatest golfers of all time, with 15 major championships including 5 Masters titles.", 15, 1996, "USA"),
+        ("Scottie Scheffler", "Scottie Scheffler has emerged as one of golf's brightest stars, becoming the world's #1 ranked player.", 2, 2018, "USA")
     ]
     
     cursor.executemany(
@@ -141,7 +168,7 @@ def insert_initial_data(cursor):
         golfers
     )
 
-# Pydantic models
+# Pydantic models (keep all existing models)
 class Tournament(BaseModel):
     year: int
     winner: str
@@ -167,7 +194,7 @@ class GolferResponse(Golfer):
     created_at: str
     updated_at: str
 
-# Authentication
+# Authentication functions (keep existing)
 def verify_admin(credentials: HTTPBasicCredentials = Depends(security)):
     is_correct_username = secrets.compare_digest(credentials.username, ADMIN_USERNAME)
     is_correct_password = secrets.compare_digest(
@@ -193,15 +220,6 @@ def log_admin_action(action: str, details: str):
     conn.commit()
     conn.close()
 
-# Serve static files (add this import at the top if not already there)
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
-import os
-
-# Mount static files directory (add this after creating the app)
-if os.path.exists("static"):
-    app.mount("/static", StaticFiles(directory="static"), name="static")
-
 # Health check endpoint
 @app.get("/health")
 async def health_check():
@@ -222,6 +240,83 @@ async def root():
             "health": "/health"
         }
 
+# Admin endpoint to reload data from JSON
+@app.post("/admin/reload-data")
+async def reload_data_from_json(admin: str = Depends(verify_admin)):
+    """Reload all data from masters_data.json file (admin only)"""
+    if not os.path.exists('masters_data.json'):
+        raise HTTPException(status_code=404, detail="masters_data.json file not found")
+    
+    try:
+        conn = sqlite3.connect('masters.db')
+        cursor = conn.cursor()
+        
+        # Clear existing data
+        cursor.execute('DELETE FROM tournaments')
+        cursor.execute('DELETE FROM golfers')
+        
+        # Load from JSON
+        load_from_json(cursor)
+        
+        conn.commit()
+        conn.close()
+        
+        # Log admin action
+        log_admin_action("RELOAD_DATA", "Reloaded all data from masters_data.json")
+        
+        return {"message": "Data successfully reloaded from masters_data.json"}
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error reloading data: {str(e)}")
+
+# Export current data to JSON
+@app.get("/admin/export-data")
+async def export_data_to_json(admin: str = Depends(verify_admin)):
+    """Export current database data to JSON format (admin only)"""
+    conn = sqlite3.connect('masters.db')
+    cursor = conn.cursor()
+    
+    # Get all tournaments
+    cursor.execute('SELECT year, winner, score, to_par, nationality FROM tournaments ORDER BY year DESC')
+    tournament_rows = cursor.fetchall()
+    
+    tournaments = []
+    for row in tournament_rows:
+        tournaments.append({
+            "year": row[0],
+            "winner": row[1],
+            "score": row[2],
+            "to_par": row[3],
+            "nationality": row[4]
+        })
+    
+    # Get all golfers
+    cursor.execute('SELECT name, bio, total_majors, turned_pro, nationality FROM golfers ORDER BY name')
+    golfer_rows = cursor.fetchall()
+    
+    golfers = []
+    for row in golfer_rows:
+        golfers.append({
+            "name": row[0],
+            "bio": row[1],
+            "total_majors": row[2],
+            "turned_pro": row[3],
+            "nationality": row[4]
+        })
+    
+    conn.close()
+    
+    export_data = {
+        "tournaments": tournaments,
+        "golfers": golfers
+    }
+    
+    # Log admin action
+    log_admin_action("EXPORT_DATA", f"Exported {len(tournaments)} tournaments and {len(golfers)} golfers")
+    
+    return export_data
+
+# Keep all existing API endpoints (tournaments, golfers, search, stats, admin endpoints)
 @app.get("/tournaments", response_model=List[TournamentResponse])
 async def get_all_tournaments():
     """Get all tournament results"""
@@ -406,7 +501,6 @@ async def get_tournament_stats():
     }
 
 # Admin endpoints (require authentication)
-
 @app.post("/admin/tournaments", response_model=TournamentResponse)
 async def add_tournament(tournament: Tournament, admin: str = Depends(verify_admin)):
     """Add or update tournament result (admin only)"""
