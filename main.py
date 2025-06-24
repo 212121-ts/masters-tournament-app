@@ -193,6 +193,15 @@ def log_admin_action(action: str, details: str):
     conn.commit()
     conn.close()
 
+# Serve static files (add this import at the top if not already there)
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+import os
+
+# Mount static files directory (add this after creating the app)
+if os.path.exists("static"):
+    app.mount("/static", StaticFiles(directory="static"), name="static")
+
 # Health check endpoint
 @app.get("/health")
 async def health_check():
@@ -200,12 +209,18 @@ async def health_check():
 
 @app.get("/")
 async def root():
-    return {
-        "message": "Masters Tournament API", 
-        "version": "1.0.0",
-        "docs": "/docs",
-        "health": "/health"
-    }
+    # If index.html exists, serve it; otherwise return API info
+    if os.path.exists("index.html"):
+        return FileResponse("index.html")
+    elif os.path.exists("static/index.html"):
+        return FileResponse("static/index.html")
+    else:
+        return {
+            "message": "Masters Tournament API", 
+            "version": "1.0.0",
+            "docs": "/docs",
+            "health": "/health"
+        }
 
 @app.get("/tournaments", response_model=List[TournamentResponse])
 async def get_all_tournaments():
