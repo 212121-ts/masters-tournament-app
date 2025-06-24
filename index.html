@@ -27,6 +27,95 @@
         .smooth-scroll {
             scroll-behavior: smooth;
         }
+        
+        /* Dark mode styles */
+        .dark {
+            background-color: #1a1a1a;
+            color: #e5e5e5;
+        }
+        
+        .dark .bg-gray-50 {
+            background-color: #1a1a1a;
+        }
+        
+        .dark .bg-white {
+            background-color: #2d2d2d;
+            color: #e5e5e5;
+        }
+        
+        .dark .text-gray-800 {
+            color: #e5e5e5;
+        }
+        
+        .dark .text-gray-600 {
+            color: #a0a0a0;
+        }
+        
+        .dark .text-gray-500 {
+            color: #8a8a8a;
+        }
+        
+        .dark .text-gray-700 {
+            color: #b0b0b0;
+        }
+        
+        .dark .border-gray-300 {
+            border-color: #4a4a4a;
+        }
+        
+        .dark .bg-gray-100 {
+            background-color: #3a3a3a;
+        }
+        
+        .dark .bg-gray-50 {
+            background-color: #2a2a2a;
+        }
+        
+        .dark .card-shadow {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .dark input {
+            background-color: #3a3a3a;
+            color: #e5e5e5;
+            border-color: #4a4a4a;
+        }
+        
+        .dark input::placeholder {
+            color: #8a8a8a;
+        }
+        
+        .dark .bg-yellow-50 {
+            background-color: #3a3020;
+        }
+        
+        .dark .border-yellow-200 {
+            border-color: #6a5a20;
+        }
+        
+        .dark .text-yellow-800 {
+            color: #f0d030;
+        }
+        
+        .dark .bg-green-50 {
+            background-color: #203a20;
+        }
+        
+        .dark .border-green-200 {
+            border-color: #206a20;
+        }
+        
+        .dark .text-green-800 {
+            color: #30f030;
+        }
+        
+        .dark .text-green-600 {
+            color: #40c040;
+        }
+        
+        .dark .text-green-800 {
+            color: #50d050;
+        }
     </style>
 </head>
 <body class="bg-gray-50 smooth-scroll">
@@ -306,6 +395,9 @@
 
         // Initialize App
         async function initApp() {
+            // Load dark mode preference first
+            loadDarkModePreference();
+            
             // Show loading state
             tournamentResults.innerHTML = '<div class="text-center py-8"><div class="text-masters-green text-lg">Loading tournament data...</div></div>';
             
@@ -783,8 +875,29 @@
         // Dark Mode
         function toggleDarkMode() {
             isDarkMode = !isDarkMode;
-            document.body.classList.toggle('dark', isDarkMode);
+            document.documentElement.classList.toggle('dark', isDarkMode);
             darkModeToggle.textContent = isDarkMode ? '☀️' : '🌙';
+            
+            // Save preference to localStorage (if available)
+            try {
+                localStorage.setItem('darkMode', isDarkMode);
+            } catch (e) {
+                // localStorage not available, that's okay
+            }
+        }
+
+        // Load dark mode preference on startup
+        function loadDarkModePreference() {
+            try {
+                const savedDarkMode = localStorage.getItem('darkMode');
+                if (savedDarkMode === 'true') {
+                    isDarkMode = true;
+                    document.documentElement.classList.add('dark');
+                    darkModeToggle.textContent = '☀️';
+                }
+            } catch (e) {
+                // localStorage not available, use default light mode
+            }
         }
 
         // Initialize the app when DOM is loaded
