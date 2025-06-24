@@ -289,6 +289,7 @@
         // API Functions
         async function fetchFromAPI(endpoint, options = {}) {
             try {
+                console.log(`Fetching from API: ${API_BASE_URL}${endpoint}`);
                 const response = await fetch(`${API_BASE_URL}${endpoint}`, {
                     headers: {
                         'Content-Type': 'application/json',
@@ -297,43 +298,64 @@
                     ...options
                 });
                 
+                console.log(`API Response status: ${response.status}`);
+                
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 
-                return await response.json();
+                const data = await response.json();
+                console.log(`API Response data:`, data);
+                return data;
             } catch (error) {
                 console.error('API Error:', error);
-                showErrorMessage('Unable to connect to the database. Please check your connection.');
+                showErrorMessage(`Unable to connect to the database: ${error.message}`);
                 return null;
             }
         }
 
         async function loadTournamentData() {
+            console.log('Loading tournament data from API...');
             const data = await fetchFromAPI('/tournaments');
-            if (data) {
+            if (data && Array.isArray(data)) {
+                console.log(`Loaded ${data.length} tournaments from API`);
                 // Convert API response to match frontend format
                 currentData = data.map(item => ({
                     year: item.year,
                     winner: item.winner,
                     score: item.score,
-                    toPar: item.to_par,
+                    toPar: item.to_par, // Note: API uses 'to_par', frontend uses 'toPar'
                     nationality: item.nationality
                 }));
+                console.log('Tournament data converted successfully');
+            } else {
+                console.error('No tournament data received from API');
+                showErrorMessage('No tournament data available');
+                currentData = [];
             }
         }
 
         async function loadStats() {
+            console.log('Loading stats from API...');
             const stats = await fetchFromAPI('/stats');
             if (stats) {
+                console.log('Stats loaded successfully:', stats);
                 currentStats = stats;
+            } else {
+                console.error('No stats received from API');
+                currentStats = {};
             }
         }
 
         async function loadGolfers() {
+            console.log('Loading golfers from API...');
             const golfers = await fetchFromAPI('/golfers');
-            if (golfers) {
+            if (golfers && Array.isArray(golfers)) {
+                console.log(`Loaded ${golfers.length} golfers from API`);
                 allGolfers = golfers;
+            } else {
+                console.error('No golfer data received from API');
+                allGolfers = [];
             }
         }
 

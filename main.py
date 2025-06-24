@@ -1,4 +1,4 @@
-# Masters Tournament Backend API - With JSON Import
+# Masters Tournament Backend API - Fixed JSON Import
 # Run with: uvicorn main:app --host 0.0.0.0 --port $PORT
 
 from fastapi import FastAPI, HTTPException, Depends, status
@@ -31,14 +31,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Serve static files (add this import at the top if not already there)
+# Serve static files
 if os.path.exists("static"):
     app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Security
 security = HTTPBasic()
-
-# Admin credentials (using environment variables)
 ADMIN_PASSWORD_HASH = hashlib.sha256(ADMIN_PASSWORD.encode()).hexdigest()
 
 # Database setup
@@ -74,7 +72,7 @@ def init_database():
         )
     ''')
     
-    # Create admin_logs table for tracking changes
+    # Create admin_logs table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS admin_logs (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -84,15 +82,21 @@ def init_database():
         )
     ''')
     
-    # Check if we should load from JSON or use default data
+    # Check if we should load data
     cursor.execute('SELECT COUNT(*) FROM tournaments')
-    if cursor.fetchone()[0] == 0:
+    tournament_count = cursor.fetchone()[0]
+    
+    print(f"Current tournament count: {tournament_count}")
+    
+    if tournament_count == 0:
         if os.path.exists('masters_data.json'):
-            print("Loading data from masters_data.json...")
+            print("Found masters_data.json, loading data...")
             load_from_json(cursor)
         else:
-            print("Loading default data...")
-            insert_initial_data(cursor)
+            print("No masters_data.json found, loading minimal default data...")
+            insert_minimal_data(cursor)
+    else:
+        print(f"Database already has {tournament_count} tournaments, skipping initial load")
     
     conn.commit()
     conn.close()
@@ -100,75 +104,97 @@ def init_database():
 def load_from_json(cursor):
     """Load tournament and golfer data from JSON file"""
     try:
+        print("Reading masters_data.json...")
         with open('masters_data.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
         
+        print(f"JSON loaded successfully. Found {len(data.get('tournaments', []))} tournaments and {len(data.get('golfers', []))} golfers")
+        
         # Insert tournaments
         tournaments = data.get('tournaments', [])
+        tournament_count = 0
         for tournament in tournaments:
-            cursor.execute('''
-                INSERT OR REPLACE INTO tournaments (year, winner, score, to_par, nationality)
-                VALUES (?, ?, ?, ?, ?)
-            ''', (
-                tournament['year'],
-                tournament['winner'],
-                tournament['score'],
-                tournament['to_par'],
-                tournament['nationality']
-            ))
+            try:
+                cursor.execute('''
+                    INSERT OR REPLACE INTO tournaments (year, winner, score, to_par, nationality)
+                    VALUES (?, ?, ?, ?, ?)
+                ''', (
+                    tournament['year'],
+                    tournament['winner'],
+                    tournament['score'],
+                    tournament['to_par'],
+                    tournament['nationality']
+                ))
+                tournament_count += 1
+            except Exception as e:
+                print(f"Error inserting tournament {tournament.get('year', 'unknown')}: {e}")
+        
+        print(f"Inserted {tournament_count} tournaments")
         
         # Insert golfers
         golfers = data.get('golfers', [])
+        golfer_count = 0
         for golfer in golfers:
-            cursor.execute('''
-                INSERT OR REPLACE INTO golfers (name, bio, total_majors, turned_pro, nationality)
-                VALUES (?, ?, ?, ?, ?)
-            ''', (
-                golfer['name'],
-                golfer.get('bio'),
-                golfer.get('total_majors', 0),
-                golfer.get('turned_pro'),
-                golfer.get('nationality')
-            ))
+            try:
+                cursor.execute('''
+                    INSERT OR REPLACE INTO golfers (name, bio, total_majors, turned_pro, nationality)
+                    VALUES (?, ?, ?, ?, ?)
+                ''', (
+                    golfer['name'],
+                    golfer.get('bio', ''),
+                    golfer.get('total_majors', 0),
+                    golfer.get('turned_pro'),
+                    golfer.get('nationality', '')
+                ))
+                golfer_count += 1
+            except Exception as e:
+                print(f"Error inserting golfer {golfer.get('name', 'unknown')}: {e}")
         
-        print(f"Loaded {len(tournaments)} tournaments and {len(golfers)} golfers from JSON")
+        print(f"Inserted {golfer_count} golfers")
+        print("JSON data loading completed successfully!")
         
+    except FileNotFoundError:
+        print("masters_data.json file not found")
+        insert_minimal_data(cursor)
+    except json.JSONDecodeError as e:
+        print(f"JSON decode error: {e}")
+        insert_minimal_data(cursor)
     except Exception as e:
         print(f"Error loading from JSON: {e}")
-        print("Falling back to default data...")
-        insert_initial_data(cursor)
+        insert_minimal_data(cursor)
 
-def insert_initial_data(cursor):
-    # Fallback data if JSON not available
+def insert_minimal_data(cursor):
+    """Insert minimal tournament data as fallback"""
+    print("Loading minimal fallback data...")
     tournaments = [
         (2024, "Scottie Scheffler", 277, -11, "USA"),
         (2023, "Jon Rahm", 276, -12, "ESP"),
         (2022, "Scottie Scheffler", 278, -10, "USA"),
         (2021, "Hideki Matsuyama", 278, -10, "JPN"),
-        (2020, "Dustin Johnson", 268, -20, "USA"),
-        (2019, "Tiger Woods", 275, -13, "USA"),
-        (2018, "Patrick Reed", 273, -15, "USA"),
-        (2017, "Sergio García", 279, -9, "ESP"),
-        (2016, "Danny Willett", 283, -5, "ENG"),
-        (2015, "Jordan Spieth", 270, -18, "USA")
+        (2020, "Dustin Johnson", 268, -20, "USA")
     ]
     
-    cursor.executemany(
-        'INSERT INTO tournaments (year, winner, score, to_par, nationality) VALUES (?, ?, ?, ?, ?)',
-        tournaments
-    )
+    for tournament in tournaments:
+        cursor.execute(
+            'INSERT OR REPLACE INTO tournaments (year, winner, score, to_par, nationality) VALUES (?, ?, ?, ?, ?)',
+            tournament
+        )
     
+    # Minimal golfer data
     golfers = [
-        ("Tiger Woods", "Tiger Woods is one of the greatest golfers of all time, with 15 major championships including 5 Masters titles.", 15, 1996, "USA"),
-        ("Scottie Scheffler", "Scottie Scheffler has emerged as one of golf's brightest stars, becoming the world's #1 ranked player.", 2, 2018, "USA")
+        ("Scottie Scheffler", "Scottie Scheffler has emerged as one of golf's brightest stars.", 2, 2018, "USA"),
+        ("Jon Rahm", "Jon Rahm is a Spanish professional golfer who captured his first major championship at the 2023 Masters.", 2, 2016, "ESP")
     ]
     
-    cursor.executemany(
-        'INSERT INTO golfers (name, bio, total_majors, turned_pro, nationality) VALUES (?, ?, ?, ?, ?)',
-        golfers
-    )
+    for golfer in golfers:
+        cursor.execute(
+            'INSERT OR REPLACE INTO golfers (name, bio, total_majors, turned_pro, nationality) VALUES (?, ?, ?, ?, ?)',
+            golfer
+        )
+    
+    print("Minimal data loaded successfully")
 
-# Pydantic models (keep all existing models)
+# Pydantic models
 class Tournament(BaseModel):
     year: int
     winner: str
@@ -194,7 +220,7 @@ class GolferResponse(Golfer):
     created_at: str
     updated_at: str
 
-# Authentication functions (keep existing)
+# Authentication
 def verify_admin(credentials: HTTPBasicCredentials = Depends(security)):
     is_correct_username = secrets.compare_digest(credentials.username, ADMIN_USERNAME)
     is_correct_password = secrets.compare_digest(
@@ -220,14 +246,13 @@ def log_admin_action(action: str, details: str):
     conn.commit()
     conn.close()
 
-# Health check endpoint
+# API Endpoints
 @app.get("/health")
 async def health_check():
     return {"status": "healthy", "service": "Masters Tournament API"}
 
 @app.get("/")
 async def root():
-    # If index.html exists, serve it; otherwise return API info
     if os.path.exists("index.html"):
         return FileResponse("index.html")
     elif os.path.exists("static/index.html"):
@@ -240,83 +265,6 @@ async def root():
             "health": "/health"
         }
 
-# Admin endpoint to reload data from JSON
-@app.post("/admin/reload-data")
-async def reload_data_from_json(admin: str = Depends(verify_admin)):
-    """Reload all data from masters_data.json file (admin only)"""
-    if not os.path.exists('masters_data.json'):
-        raise HTTPException(status_code=404, detail="masters_data.json file not found")
-    
-    try:
-        conn = sqlite3.connect('masters.db')
-        cursor = conn.cursor()
-        
-        # Clear existing data
-        cursor.execute('DELETE FROM tournaments')
-        cursor.execute('DELETE FROM golfers')
-        
-        # Load from JSON
-        load_from_json(cursor)
-        
-        conn.commit()
-        conn.close()
-        
-        # Log admin action
-        log_admin_action("RELOAD_DATA", "Reloaded all data from masters_data.json")
-        
-        return {"message": "Data successfully reloaded from masters_data.json"}
-        
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error reloading data: {str(e)}")
-
-# Export current data to JSON
-@app.get("/admin/export-data")
-async def export_data_to_json(admin: str = Depends(verify_admin)):
-    """Export current database data to JSON format (admin only)"""
-    conn = sqlite3.connect('masters.db')
-    cursor = conn.cursor()
-    
-    # Get all tournaments
-    cursor.execute('SELECT year, winner, score, to_par, nationality FROM tournaments ORDER BY year DESC')
-    tournament_rows = cursor.fetchall()
-    
-    tournaments = []
-    for row in tournament_rows:
-        tournaments.append({
-            "year": row[0],
-            "winner": row[1],
-            "score": row[2],
-            "to_par": row[3],
-            "nationality": row[4]
-        })
-    
-    # Get all golfers
-    cursor.execute('SELECT name, bio, total_majors, turned_pro, nationality FROM golfers ORDER BY name')
-    golfer_rows = cursor.fetchall()
-    
-    golfers = []
-    for row in golfer_rows:
-        golfers.append({
-            "name": row[0],
-            "bio": row[1],
-            "total_majors": row[2],
-            "turned_pro": row[3],
-            "nationality": row[4]
-        })
-    
-    conn.close()
-    
-    export_data = {
-        "tournaments": tournaments,
-        "golfers": golfers
-    }
-    
-    # Log admin action
-    log_admin_action("EXPORT_DATA", f"Exported {len(tournaments)} tournaments and {len(golfers)} golfers")
-    
-    return export_data
-
-# Keep all existing API endpoints (tournaments, golfers, search, stats, admin endpoints)
 @app.get("/tournaments", response_model=List[TournamentResponse])
 async def get_all_tournaments():
     """Get all tournament results"""
@@ -370,13 +318,11 @@ async def get_all_golfers():
     conn = sqlite3.connect('masters.db')
     cursor = conn.cursor()
     
-    # Get all golfers
     cursor.execute('SELECT * FROM golfers ORDER BY name')
     golfer_rows = cursor.fetchall()
     
     golfers = []
     for row in golfer_rows:
-        # Get Masters wins for this golfer
         cursor.execute('SELECT year FROM tournaments WHERE winner = ? ORDER BY year DESC', (row[1],))
         wins = [win[0] for win in cursor.fetchall()]
         
@@ -401,21 +347,17 @@ async def get_golfer_by_name(golfer_name: str):
     conn = sqlite3.connect('masters.db')
     cursor = conn.cursor()
     
-    # Get golfer info
     cursor.execute('SELECT * FROM golfers WHERE name = ?', (golfer_name,))
     row = cursor.fetchone()
     
     if not row:
-        # If golfer not in golfers table, check if they're in tournaments
         cursor.execute('SELECT DISTINCT winner FROM tournaments WHERE winner = ?', (golfer_name,))
         if not cursor.fetchone():
             conn.close()
             raise HTTPException(status_code=404, detail="Golfer not found")
         
-        # Create basic golfer entry
         row = (None, golfer_name, None, 0, None, None, None, None)
     
-    # Get Masters wins
     cursor.execute('SELECT year FROM tournaments WHERE winner = ? ORDER BY year DESC', (golfer_name,))
     wins = [win[0] for win in cursor.fetchall()]
     
@@ -439,13 +381,11 @@ async def search_tournaments(q: str):
     conn = sqlite3.connect('masters.db')
     cursor = conn.cursor()
     
-    # Try to parse as year
     try:
         year = int(q)
         cursor.execute('SELECT * FROM tournaments WHERE year = ?', (year,))
         rows = cursor.fetchall()
     except ValueError:
-        # Search by golfer name
         cursor.execute('SELECT * FROM tournaments WHERE winner LIKE ? ORDER BY year DESC', (f'%{q}%',))
         rows = cursor.fetchall()
     
@@ -472,19 +412,16 @@ async def get_tournament_stats():
     conn = sqlite3.connect('masters.db')
     cursor = conn.cursor()
     
-    # Total years
     cursor.execute('SELECT COUNT(*) FROM tournaments')
     total_years = cursor.fetchone()[0]
     
-    # Unique winners
     cursor.execute('SELECT COUNT(DISTINCT winner) FROM tournaments')
     unique_winners = cursor.fetchone()[0]
     
-    # Best score
     cursor.execute('SELECT MIN(score) FROM tournaments')
-    best_score = cursor.fetchone()[0]
+    best_score_result = cursor.fetchone()
+    best_score = best_score_result[0] if best_score_result and best_score_result[0] else 0
     
-    # Most wins by a golfer
     cursor.execute('SELECT winner, COUNT(*) as wins FROM tournaments GROUP BY winner ORDER BY wins DESC LIMIT 1')
     most_wins_data = cursor.fetchone()
     most_wins = most_wins_data[1] if most_wins_data else 0
@@ -500,19 +437,17 @@ async def get_tournament_stats():
         "most_wins_golfer": most_wins_golfer
     }
 
-# Admin endpoints (require authentication)
+# Admin endpoints
 @app.post("/admin/tournaments", response_model=TournamentResponse)
 async def add_tournament(tournament: Tournament, admin: str = Depends(verify_admin)):
     """Add or update tournament result (admin only)"""
     conn = sqlite3.connect('masters.db')
     cursor = conn.cursor()
     
-    # Check if year already exists
     cursor.execute('SELECT id FROM tournaments WHERE year = ?', (tournament.year,))
     existing = cursor.fetchone()
     
     if existing:
-        # Update existing tournament
         cursor.execute('''
             UPDATE tournaments 
             SET winner = ?, score = ?, to_par = ?, nationality = ?, updated_at = CURRENT_TIMESTAMP
@@ -520,25 +455,19 @@ async def add_tournament(tournament: Tournament, admin: str = Depends(verify_adm
         ''', (tournament.winner, tournament.score, tournament.to_par, tournament.nationality, tournament.year))
         action = "UPDATE"
     else:
-        # Insert new tournament
         cursor.execute('''
             INSERT INTO tournaments (year, winner, score, to_par, nationality)
             VALUES (?, ?, ?, ?, ?)
         ''', (tournament.year, tournament.winner, tournament.score, tournament.to_par, tournament.nationality))
         action = "INSERT"
     
-    # Get the updated/inserted record
     cursor.execute('SELECT * FROM tournaments WHERE year = ?', (tournament.year,))
     row = cursor.fetchone()
     
     conn.commit()
     conn.close()
     
-    # Log admin action
-    log_admin_action(
-        action,
-        f"Tournament {tournament.year}: {tournament.winner} ({tournament.score}, {tournament.to_par})"
-    )
+    log_admin_action(action, f"Tournament {tournament.year}: {tournament.winner} ({tournament.score}, {tournament.to_par})")
     
     return {
         "id": row[0],
@@ -551,80 +480,76 @@ async def add_tournament(tournament: Tournament, admin: str = Depends(verify_adm
         "updated_at": row[7]
     }
 
-@app.post("/admin/golfers", response_model=GolferResponse)
-async def add_or_update_golfer(golfer: Golfer, admin: str = Depends(verify_admin)):
-    """Add or update golfer bio (admin only)"""
-    conn = sqlite3.connect('masters.db')
-    cursor = conn.cursor()
+@app.post("/admin/reload-data")
+async def reload_data_from_json(admin: str = Depends(verify_admin)):
+    """Reload all data from masters_data.json file (admin only)"""
+    if not os.path.exists('masters_data.json'):
+        raise HTTPException(status_code=404, detail="masters_data.json file not found")
     
-    # Check if golfer already exists
-    cursor.execute('SELECT id FROM golfers WHERE name = ?', (golfer.name,))
-    existing = cursor.fetchone()
-    
-    if existing:
-        # Update existing golfer
-        cursor.execute('''
-            UPDATE golfers 
-            SET bio = ?, total_majors = ?, turned_pro = ?, nationality = ?, updated_at = CURRENT_TIMESTAMP
-            WHERE name = ?
-        ''', (golfer.bio, golfer.total_majors, golfer.turned_pro, golfer.nationality, golfer.name))
-        action = "UPDATE"
-    else:
-        # Insert new golfer
-        cursor.execute('''
-            INSERT INTO golfers (name, bio, total_majors, turned_pro, nationality)
-            VALUES (?, ?, ?, ?, ?)
-        ''', (golfer.name, golfer.bio, golfer.total_majors, golfer.turned_pro, golfer.nationality))
-        action = "INSERT"
-    
-    # Get Masters wins
-    cursor.execute('SELECT year FROM tournaments WHERE winner = ? ORDER BY year DESC', (golfer.name,))
-    wins = [win[0] for win in cursor.fetchall()]
-    
-    # Get the updated/inserted record
-    cursor.execute('SELECT * FROM golfers WHERE name = ?', (golfer.name,))
-    row = cursor.fetchone()
-    
-    conn.commit()
-    conn.close()
-    
-    # Log admin action
-    log_admin_action(action, f"Golfer: {golfer.name}")
-    
-    return {
-        "id": row[0],
-        "name": row[1],
-        "bio": row[2],
-        "total_majors": row[3],
-        "turned_pro": row[4],
-        "nationality": row[5],
-        "masters_wins": wins,
-        "created_at": row[6],
-        "updated_at": row[7]
-    }
-
-@app.delete("/admin/tournaments/{year}")
-async def delete_tournament(year: int, admin: str = Depends(verify_admin)):
-    """Delete tournament by year (admin only)"""
-    conn = sqlite3.connect('masters.db')
-    cursor = conn.cursor()
-    
-    cursor.execute('SELECT winner FROM tournaments WHERE year = ?', (year,))
-    result = cursor.fetchone()
-    
-    if not result:
+    try:
+        conn = sqlite3.connect('masters.db')
+        cursor = conn.cursor()
+        
+        print("Clearing existing data...")
+        cursor.execute('DELETE FROM tournaments')
+        cursor.execute('DELETE FROM golfers')
+        
+        print("Loading fresh data from JSON...")
+        load_from_json(cursor)
+        
+        conn.commit()
         conn.close()
-        raise HTTPException(status_code=404, detail="Tournament not found")
+        
+        log_admin_action("RELOAD_DATA", "Reloaded all data from masters_data.json")
+        
+        return {"message": "Data successfully reloaded from masters_data.json"}
+        
+    except Exception as e:
+        print(f"Error reloading data: {e}")
+        raise HTTPException(status_code=500, detail=f"Error reloading data: {str(e)}")
+
+@app.get("/admin/export-data")
+async def export_data_to_json(admin: str = Depends(verify_admin)):
+    """Export current database data to JSON format (admin only)"""
+    conn = sqlite3.connect('masters.db')
+    cursor = conn.cursor()
     
-    winner = result[0]
-    cursor.execute('DELETE FROM tournaments WHERE year = ?', (year,))
-    conn.commit()
+    cursor.execute('SELECT year, winner, score, to_par, nationality FROM tournaments ORDER BY year DESC')
+    tournament_rows = cursor.fetchall()
+    
+    tournaments = []
+    for row in tournament_rows:
+        tournaments.append({
+            "year": row[0],
+            "winner": row[1],
+            "score": row[2],
+            "to_par": row[3],
+            "nationality": row[4]
+        })
+    
+    cursor.execute('SELECT name, bio, total_majors, turned_pro, nationality FROM golfers ORDER BY name')
+    golfer_rows = cursor.fetchall()
+    
+    golfers = []
+    for row in golfer_rows:
+        golfers.append({
+            "name": row[0],
+            "bio": row[1],
+            "total_majors": row[2],
+            "turned_pro": row[3],
+            "nationality": row[4]
+        })
+    
     conn.close()
     
-    # Log admin action
-    log_admin_action("DELETE", f"Tournament {year}: {winner}")
+    export_data = {
+        "tournaments": tournaments,
+        "golfers": golfers
+    }
     
-    return {"message": f"Tournament {year} deleted successfully"}
+    log_admin_action("EXPORT_DATA", f"Exported {len(tournaments)} tournaments and {len(golfers)} golfers")
+    
+    return export_data
 
 @app.get("/admin/logs")
 async def get_admin_logs(admin: str = Depends(verify_admin)):
