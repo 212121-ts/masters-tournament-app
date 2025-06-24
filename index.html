@@ -267,7 +267,7 @@
 
     <script>
         // API Configuration - UPDATE THIS URL TO YOUR RENDER BACKEND URL
-        const API_BASE_URL = ''; // Empty string for same domain
+        const API_BASE_URL = 'https://your-backend-name.onrender.com'; // CHANGE THIS
         
         // App State
         let currentData = [];
@@ -374,23 +374,41 @@
         }
 
         async function addTournamentAPI(tournament, credentials) {
-            const authHeader = 'Basic ' + btoa(`${credentials.username}:${credentials.password}`);
-            
-            const response = await fetchFromAPI('/admin/tournaments', {
-                method: 'POST',
-                headers: {
-                    'Authorization': authHeader
-                },
-                body: JSON.stringify({
-                    year: tournament.year,
-                    winner: tournament.winner,
-                    score: tournament.score,
-                    to_par: tournament.toPar,
-                    nationality: tournament.nationality
-                })
-            });
-            
-            return response;
+            try {
+                console.log('Adding tournament via API...', tournament);
+                const authHeader = 'Basic ' + btoa(`${credentials.username}:${credentials.password}`);
+                
+                const response = await fetch(`${API_BASE_URL}/admin/tournaments`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': authHeader,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        year: tournament.year,
+                        winner: tournament.winner,
+                        score: tournament.score,
+                        to_par: tournament.toPar,
+                        nationality: tournament.nationality
+                    })
+                });
+                
+                console.log(`Add tournament response status: ${response.status}`);
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('Add tournament failed:', response.status, errorText);
+                    throw new Error(`HTTP ${response.status}: ${errorText}`);
+                }
+                
+                const data = await response.json();
+                console.log('Tournament added successfully:', data);
+                return data;
+                
+            } catch (error) {
+                console.error('Error in addTournamentAPI:', error);
+                throw error;
+            }
         }
 
         function showErrorMessage(message) {
@@ -663,20 +681,31 @@
         async function authenticateAdmin(username, password) {
             // Test authentication by making a simple API call
             try {
+                console.log('Testing admin authentication...');
                 const authHeader = 'Basic ' + btoa(`${username}:${password}`);
-                const response = await fetchFromAPI('/admin/logs', {
+                
+                const response = await fetch(`${API_BASE_URL}/admin/logs`, {
+                    method: 'GET',
                     headers: {
-                        'Authorization': authHeader
+                        'Authorization': authHeader,
+                        'Content-Type': 'application/json'
                     }
                 });
                 
-                if (response) {
+                console.log(`Auth test response status: ${response.status}`);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Authentication successful');
                     adminCredentials = { username, password };
                     isAdminAuthenticated = true;
                     return true;
+                } else {
+                    console.error('Authentication failed:', response.status, response.statusText);
+                    return false;
                 }
-                return false;
             } catch (error) {
+                console.error('Authentication error:', error);
                 return false;
             }
         }
@@ -807,7 +836,7 @@
 
             // Login button
             document.getElementById('loginBtn').addEventListener('click', async () => {
-                const username = document.getElementById('adminUsername').value;
+                const username = document.getElementById('adminUsername').value.trim();
                 const password = document.getElementById('adminPassword').value;
                 const errorDiv = document.getElementById('loginError');
 
@@ -821,13 +850,16 @@
                 loginBtn.textContent = '🔄 Authenticating...';
                 loginBtn.disabled = true;
 
+                console.log('Attempting login with username:', username);
                 const isValid = await authenticateAdmin(username, password);
                 
                 if (isValid) {
+                    console.log('Login successful, showing admin form');
                     showAdminForm();
                     errorDiv.classList.add('hidden');
                 } else {
-                    errorDiv.textContent = 'Invalid credentials. Please try again.';
+                    console.log('Login failed');
+                    errorDiv.textContent = 'Invalid credentials. Please check username and password.';
                     errorDiv.classList.remove('hidden');
                 }
 
