@@ -1,5 +1,6 @@
 {
   "tournaments": [
+    {"year": 2025, "winner": "Roy McIlroy", "score": 277, "to_par": -11, "nationality": "USA"},
     {"year": 2024, "winner": "Scottie Scheffler", "score": 277, "to_par": -11, "nationality": "USA"},
     {"year": 2023, "winner": "Jon Rahm", "score": 276, "to_par": -12, "nationality": "ESP"},
     {"year": 2022, "winner": "Scottie Scheffler", "score": 278, "to_par": -10, "nationality": "USA"},
