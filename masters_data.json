@@ -1,6 +1,490 @@
 {
   "tournaments": [
-    {"year": 2025, "winner": "Roy McIlroy", "score": 277, "to_par": -11, "nationality": "USA"},
+    {"year": 2024, "winner": "Scottie Scheffler", "score": 277, "to_par": -11, "nationality": "USA"},
+    {"year": 2023, "winner": "Jon Rahm", "score": 276, "to_par": -12, "nationality": "ESP"},
+    {"year": 2022, "winner": "Scottie Scheffler", "score": 278, "to_par": -10, "nationality": "USA"},
+    {"year": 2021, "winner": "Hideki Matsuyama", "score": 278, "to_par": -10, "nationality": "JPN"},
+    {"year": 2020, "winner": "Dustin Johnson", "score": 268, "to_par": -20, "nationality": "USA"},
+    {"year": 2019, "winner": "Tiger Woods", "score": 275, "to_par": -13, "nationality": "USA"},
+    {"year": 2018, "winner": "Patrick Reed", "score": 273, "to_par": -15, "nationality": "USA"},
+    {"year": 2017, "winner": "Sergio García", "score": 279, "to_par": -9, "nationality": "ESP"},
+    {"year": 2016, "winner": "Danny Willett", "score": 283, "to_par": -5, "nationality": "ENG"},
+    {"year": 2015, "winner": "Jordan Spieth", "score": 270, "to_par": -18, "nationality": "USA"},
+    {"year": 2014, "winner": "Bubba Watson", "score": 280, "to_par": -8, "nationality": "USA"},
+    {"year": 2013, "winner": "Adam Scott", "score": 279, "to_par": -9, "nationality": "AUS"},
+    {"year": 2012, "winner": "Bubba Watson", "score": 278, "to_par": -10, "nationality": "USA"},
+    {"year": 2011, "winner": "Charl Schwartzel", "score": 274, "to_par": -14, "nationality": "RSA"},
+    {"year": 2010, "winner": "Phil Mickelson", "score": 272, "to_par": -16, "nationality": "USA"},
+    {"year": 2009, "winner": "Ángel Cabrera", "score": 276, "to_par": -12, "nationality": "ARG"},
+    {"year": 2008, "winner": "Trevor Immelman", "score": 280, "to_par": -8, "nationality": "RSA"},
+    {"year": 2007, "winner": "Zach Johnson", "score": 289, "to_par": 1, "nationality": "USA"},
+    {"year": 2006, "winner": "Phil Mickelson", "score": 281, "to_par": -7, "nationality": "USA"},
+    {"year": 2005, "winner": "Tiger Woods", "score": 276, "to_par": -12, "nationality": "USA"},
+    {"year": 2004, "winner": "Phil Mickelson", "score": 279, "to_par": -9, "nationality": "USA"},
+    {"year": 2003, "winner": "Mike Weir", "score": 281, "to_par": -7, "nationality": "CAN"},
+    {"year": 2002, "winner": "Tiger Woods", "score": 276, "to_par": -12, "nationality": "USA"},
+    {"year": 2001, "winner": "Tiger Woods", "score": 272, "to_par": -16, "nationality": "USA"},
+    {"year": 2000, "winner": "Vijay Singh", "score": 278, "to_par": -10, "nationality": "FJI"},
+    {"year": 1999, "winner": "José María Olazábal", "score": 280, "to_par": -8, "nationality": "ESP"},
+    {"year": 1998, "winner": "Mark O'Meara", "score": 279, "to_par": -9, "nationality": "USA"},
+    {"year": 1997, "winner": "Tiger Woods", "score": 270, "to_par": -18, "nationality": "USA"},
+    {"year": 1996, "winner": "Nick Faldo", "score": 276, "to_par": -12, "nationality": "ENG"},
+    {"year": 1995, "winner": "Ben Crenshaw", "score": 274, "to_par": -14, "nationality": "USA"},
+    {"year": 1994, "winner": "José María Olazábal", "score": 279, "to_par": -9, "nationality": "ESP"},
+    {"year": 1993, "winner": "Bernhard Langer", "score": 277, "to_par": -11, "nationality": "GER"},
+    {"year": 1992, "winner": "Fred Couples", "score": 275, "to_par": -13, "nationality": "USA"},
+    {"year": 1991, "winner": "Ian Woosnam", "score": 277, "to_par": -11, "nationality": "WAL"},
+    {"year": 1990, "winner": "Nick Faldo", "score": 278, "to_par": -10, "nationality": "ENG"},
+    {"year": 1989, "winner": "Nick Faldo", "score": 283, "to_par": -5, "nationality": "ENG"},
+    {"year": 1988, "winner": "Sandy Lyle", "score": 281, "to_par": -7, "nationality": "SCO"},
+    {"year": 1987, "winner": "Larry Mize", "score": 285, "to_par": -3, "nationality": "USA"},
+    {"year": 1986, "winner": "Jack Nicklaus", "score": 279, "to_par": -9, "nationality": "USA"},
+    {"year": 1985, "winner": "Bernhard Langer", "score": 282, "to_par": -6, "nationality": "GER"},
+    {"year": 1984, "winner": "Ben Crenshaw", "score": 277, "to_par": -11, "nationality": "USA"},
+    {"year": 1983, "winner": "Seve Ballesteros", "score": 280, "to_par": -8, "nationality": "ESP"},
+    {"year": 1982, "winner": "Craig Stadler", "score": 284, "to_par": -4, "nationality": "USA"},
+    {"year": 1981, "winner": "Tom Watson", "score": 280, "to_par": -8, "nationality": "USA"},
+    {"year": 1980, "winner": "Seve Ballesteros", "score": 275, "to_par": -13, "nationality": "ESP"},
+    {"year": 1979, "winner": "Fuzzy Zoeller", "score": 280, "to_par": -8, "nationality": "USA"},
+    {"year": 1978, "winner": "Gary Player", "score": 277, "to_par": -11, "nationality": "RSA"},
+    {"year": 1977, "winner": "Tom Watson", "score": 276, "to_par": -12, "nationality": "USA"},
+    {"year": 1976, "winner": "Raymond Floyd", "score": 271, "to_par": -17, "nationality": "USA"},
+    {"year": 1975, "winner": "Jack Nicklaus", "score": 276, "to_par": -12, "nationality": "USA"},
+    {"year": 1974, "winner": "Gary Player", "score": 278, "to_par": -10, "nationality": "RSA"},
+    {"year": 1973, "winner": "Tommy Aaron", "score": 283, "to_par": -5, "nationality": "USA"},
+    {"year": 1972, "winner": "Jack Nicklaus", "score": 286, "to_par": -2, "nationality": "USA"},
+    {"year": 1971, "winner": "Charles Coody", "score": 279, "to_par": -9, "nationality": "USA"},
+    {"year": 1970, "winner": "Billy Casper", "score": 279, "to_par": -9, "nationality": "USA"},
+    {"year": 1969, "winner": "George Archer", "score": 281, "to_par": -7, "nationality": "USA"},
+    {"year": 1968, "winner": "Bob Goalby", "score": 277, "to_par": -11, "nationality": "USA"},
+    {"year": 1967, "winner": "Gay Brewer", "score": 280, "to_par": -8, "nationality": "USA"},
+    {"year": 1966, "winner": "Jack Nicklaus", "score": 288, "to_par": 0, "nationality": "USA"},
+    {"year": 1965, "winner": "Jack Nicklaus", "score": 271, "to_par": -17, "nationality": "USA"},
+    {"year": 1964, "winner": "Arnold Palmer", "score": 276, "to_par": -12, "nationality": "USA"},
+    {"year": 1963, "winner": "Jack Nicklaus", "score": 286, "to_par": -2, "nationality": "USA"},
+    {"year": 1962, "winner": "Arnold Palmer", "score": 280, "to_par": -8, "nationality": "USA"},
+    {"year": 1961, "winner": "Gary Player", "score": 280, "to_par": -8, "nationality": "RSA"},
+    {"year": 1960, "winner": "Arnold Palmer", "score": 282, "to_par": -6, "nationality": "USA"},
+    {"year": 1959, "winner": "Art Wall Jr.", "score": 284, "to_par": -4, "nationality": "USA"},
+    {"year": 1958, "winner": "Arnold Palmer", "score": 284, "to_par": -4, "nationality": "USA"},
+    {"year": 1957, "winner": "Doug Ford", "score": 283, "to_par": -5, "nationality": "USA"},
+    {"year": 1956, "winner": "Jack Burke Jr.", "score": 289, "to_par": 1, "nationality": "USA"},
+    {"year": 1955, "winner": "Cary Middlecoff", "score": 279, "to_par": -9, "nationality": "USA"},
+    {"year": 1954, "winner": "Sam Snead", "score": 289, "to_par": 1, "nationality": "USA"},
+    {"year": 1953, "winner": "Ben Hogan", "score": 274, "to_par": -14, "nationality": "USA"},
+    {"year": 1952, "winner": "Sam Snead", "score": 286, "to_par": -2, "nationality": "USA"},
+    {"year": 1951, "winner": "Ben Hogan", "score": 280, "to_par": -8, "nationality": "USA"},
+    {"year": 1950, "winner": "Jimmy Demaret", "score": 283, "to_par": -5, "nationality": "USA"},
+    {"year": 1949, "winner": "Sam Snead", "score": 282, "to_par": -6, "nationality": "USA"},
+    {"year": 1948, "winner": "Claude Harmon", "score": 279, "to_par": -9, "nationality": "USA"},
+    {"year": 1947, "winner": "Jimmy Demaret", "score": 281, "to_par": -7, "nationality": "USA"},
+    {"year": 1946, "winner": "Herman Keiser", "score": 282, "to_par": -6, "nationality": "USA"},
+    {"year": 1942, "winner": "Byron Nelson", "score": 280, "to_par": -8, "nationality": "USA"},
+    {"year": 1941, "winner": "Craig Wood", "score": 280, "to_par": -8, "nationality": "USA"},
+    {"year": 1940, "winner": "Jimmy Demaret", "score": 280, "to_par": -8, "nationality": "USA"},
+    {"year": 1939, "winner": "Ralph Guldahl", "score": 279, "to_par": -9, "nationality": "USA"},
+    {"year": 1938, "winner": "Henry Picard", "score": 285, "to_par": -3, "nationality": "USA"},
+    {"year": 1937, "winner": "Byron Nelson", "score": 283, "to_par": -5, "nationality": "USA"},
+    {"year": 1936, "winner": "Horton Smith", "score": 285, "to_par": -3, "nationality": "USA"},
+    {"year": 1935, "winner": "Gene Sarazen", "score": 282, "to_par": -6, "nationality": "USA"},
+    {"year": 1934, "winner": "Horton Smith", "score": 284, "to_par": -4, "nationality": "USA"}
+  ],
+  "golfers": [
+    {
+      "name": "Scottie Scheffler",
+      "bio": "Scottie Scheffler has emerged as one of golf's brightest stars, becoming the world's #1 ranked player. His consistent play and mental toughness have led to multiple PGA Tour victories including back-to-back Masters wins in 2022 and 2024. Known for his steady demeanor and excellent ball-striking, Scheffler's rise to the top has been meteoric since turning professional in 2018.",
+      "total_majors": 2,
+      "turned_pro": 2018,
+      "nationality": "USA"
+    },
+    {
+      "name": "Jon Rahm",
+      "bio": "Jon Rahm is a Spanish professional golfer who captured his first major championship at the 2023 Masters Tournament. Known for his fiery temperament and powerful game, Rahm has been one of the world's top-ranked players. His Masters victory was emotional, coming after several close calls in major championships. He's considered one of the best international players of his generation.",
+      "total_majors": 2,
+      "turned_pro": 2016,
+      "nationality": "ESP"
+    },
+    {
+      "name": "Hideki Matsuyama",
+      "bio": "Hideki Matsuyama made history in 2021 by becoming the first Japanese male golfer to win a major championship when he captured the Masters Tournament. His victory was a breakthrough moment for Asian golf and inspired a generation of Japanese golfers. Known for his precise iron play and putting, Matsuyama has been a consistent performer on the PGA Tour since turning professional.",
+      "total_majors": 1,
+      "turned_pro": 2013,
+      "nationality": "JPN"
+    },
+    {
+      "name": "Dustin Johnson",
+      "bio": "Dustin Johnson dominated the 2020 Masters with a record-tying score of -20, showcasing his incredible length and improved short game. Known for his power off the tee and calm demeanor, Johnson has been one of the most consistent players in professional golf. His Masters victory was his second major championship and came during the unique November Masters held due to the COVID-19 pandemic.",
+      "total_majors": 2,
+      "turned_pro": 2007,
+      "nationality": "USA"
+    },
+    {
+      "name": "Tiger Woods",
+      "bio": "Tiger Woods is one of the greatest golfers of all time, with 15 major championships including 5 Masters titles. His 1997 Masters victory at age 21 was historic, winning by 12 strokes with a record-breaking score of 270. Known for his incredible comeback story, including his 2019 Masters victory after personal and physical struggles, Tiger's impact on golf is immeasurable. His dominance in the late 1990s and 2000s brought unprecedented attention to the sport.",
+      "total_majors": 15,
+      "turned_pro": 1996,
+      "nationality": "USA"
+    },
+    {
+      "name": "Patrick Reed",
+      "bio": "Patrick Reed earned his first major championship at the 2018 Masters Tournament, displaying the tenacity and confidence that earned him the nickname 'Captain America.' Known for his clutch putting and fearless approach to big moments, Reed has been a polarizing but undeniably talented player. His Masters victory came after years of contending in major championships and establishing himself as one of the game's grittiest competitors.",
+      "total_majors": 1,
+      "turned_pro": 2011,
+      "nationality": "USA"
+    },
+    {
+      "name": "Sergio García",
+      "bio": "Sergio García finally captured his elusive first major championship at the 2017 Masters Tournament in dramatic fashion, defeating Justin Rose in a playoff. The emotional victory came on what would have been mentor Seve Ballesteros's 60th birthday. Known for his passionate play and incredible short game, García had endured numerous heartbreaks in majors before his breakthrough at Augusta National.",
+      "total_majors": 1,
+      "turned_pro": 1999,
+      "nationality": "ESP"
+    },
+    {
+      "name": "Danny Willett",
+      "bio": "Danny Willett stunned the golf world by winning the 2016 Masters Tournament, capitalizing on Jordan Spieth's final-round collapse. The Englishman became the first European to win the Masters since José María Olazábal in 1999. His victory was all the more remarkable as he had considered not playing due to his wife's pregnancy. Willett's calm demeanor and steady play under pressure defined his breakthrough major championship.",
+      "total_majors": 1,
+      "turned_pro": 2008,
+      "nationality": "ENG"
+    },
+    {
+      "name": "Jordan Spieth",
+      "bio": "Jordan Spieth burst onto the scene with his dominant 2015 Masters victory, tying Tiger Woods' scoring record of 270. Known for his exceptional putting and course management, Spieth won three majors before age 24. His Masters win was part of an incredible year that included the U.S. Open. Despite some struggles in subsequent years, Spieth's talent and competitive fire have kept him among golf's elite players.",
+      "total_majors": 3,
+      "turned_pro": 2012,
+      "nationality": "USA"
+    },
+    {
+      "name": "Bubba Watson",
+      "bio": "Bubba Watson is known for his incredible length off the tee and creative shot-making ability. His two Masters victories (2012, 2014) showcase his unique style and ability to shape shots around Augusta National's challenging layout. Watson's emotional celebrations and colorful personality have made him a fan favorite. His self-taught swing and unconventional approach to the game have made him one of golf's most entertaining and successful players.",
+      "total_majors": 2,
+      "turned_pro": 2003,
+      "nationality": "USA"
+    },
+    {
+      "name": "Adam Scott",
+      "bio": "Adam Scott became the first Australian to win the Masters Tournament when he captured the green jacket in 2013. His victory ended Australia's long wait for a Masters champion and was achieved with one of the most beautiful swings in professional golf. Known for his consistency and professionalism, Scott has been a model ambassador for the game. His triumph at Augusta National was the culmination of years of contending in major championships.",
+      "total_majors": 1,
+      "turned_pro": 2000,
+      "nationality": "AUS"
+    },
+    {
+      "name": "Charl Schwartzel",
+      "bio": "Charl Schwartzel made a dramatic charge to win the 2011 Masters Tournament, birdieing the final four holes to claim his first major championship. The South African's fearless final-round performance showcased his talent and mental toughness. Known for his aggressive style and excellent ball-striking, Schwartzel's Masters victory was one of the most exciting finishes in tournament history.",
+      "total_majors": 1,
+      "turned_pro": 2002,
+      "nationality": "RSA"
+    },
+    {
+      "name": "Phil Mickelson",
+      "bio": "Phil Mickelson, known as 'Lefty', is a fan favorite with 6 major championships including 3 Masters titles. Known for his aggressive play style and short game wizardry, he's one of the most popular players in golf history. His left-handed swing and charismatic personality have made him a household name. Mickelson's Masters victories in 2004, 2006, and 2010 showcased his ability to perform in clutch moments.",
+      "total_majors": 6,
+      "turned_pro": 1992,
+      "nationality": "USA"
+    },
+    {
+      "name": "Ángel Cabrera",
+      "bio": "Ángel Cabrera, known as 'El Pato' (The Duck), won the 2009 Masters Tournament in a thrilling playoff. The Argentine golfer was known for his powerful driving and fearless approach to the game. His Masters victory made him the first South American to win at Augusta National. Cabrera's blue-collar background and late start in professional golf made his major championship success all the more remarkable.",
+      "total_majors": 2,
+      "turned_pro": 1989,
+      "nationality": "ARG"
+    },
+    {
+      "name": "Trevor Immelman",
+      "bio": "Trevor Immelman captured the 2008 Masters Tournament while battling health issues, making his victory even more impressive. The South African golfer overcame a benign tumor and various injuries to claim his first and only major championship. Known for his steady play and strong mental game, Immelman's Masters triumph was a testament to his perseverance and determination.",
+      "total_majors": 1,
+      "turned_pro": 1999,
+      "nationality": "RSA"
+    },
+    {
+      "name": "Zach Johnson",
+      "bio": "Zach Johnson won the 2007 Masters Tournament with a methodical, strategic approach that proved course management could triumph over pure length. His victory came during a windy week at Augusta National where precision mattered more than power. Johnson's steady demeanor and excellent putting made him a worthy Masters champion. He would later add a second major at the 2015 Open Championship.",
+      "total_majors": 2,
+      "turned_pro": 1998,
+      "nationality": "USA"
+    },
+    {
+      "name": "Mike Weir",
+      "bio": "Mike Weir became the first Canadian to win the Masters Tournament when he captured the 2003 championship in a playoff. The left-handed golfer was known for his excellent short game and mental toughness. Weir's Masters victory was the pinnacle of a career that saw him reach the top of the world rankings. His success paved the way for future generations of Canadian golfers.",
+      "total_majors": 1,
+      "turned_pro": 1992,
+      "nationality": "CAN"
+    },
+    {
+      "name": "Vijay Singh",
+      "bio": "Vijay Singh won the 2000 Masters Tournament as part of a remarkable late-career surge that saw him become the world's #1 player. The Fijian golfer was known for his incredible work ethic and dedication to practice. Singh's powerful game and mental toughness made him one of the most successful international players in golf history. His Masters victory was one of three major championships in his career.",
+      "total_majors": 3,
+      "turned_pro": 1982,
+      "nationality": "FJI"
+    },
+    {
+      "name": "José María Olazábal",
+      "bio": "José María Olazábal won two Masters Tournaments (1994, 1999) and was renowned as one of the greatest short-game players in golf history. The Spanish golfer overcame serious foot problems that threatened his career to return and win his second green jacket in 1999. Known for his incredible touch around the greens and passionate play, Olazábal was also a successful Ryder Cup player and captain.",
+      "total_majors": 2,
+      "turned_pro": 1985,
+      "nationality": "ESP"
+    },
+    {
+      "name": "Mark O'Meara",
+      "bio": "Mark O'Meara had a career year in 1998, winning both the Masters Tournament and the Open Championship at age 41. His Masters victory was achieved through steady play and excellent putting throughout the week. O'Meara was known for his smooth swing and consistent ball-striking. His friendship and practice sessions with Tiger Woods helped both players improve their games during the late 1990s.",
+      "total_majors": 2,
+      "turned_pro": 1980,
+      "nationality": "USA"
+    },
+    {
+      "name": "Nick Faldo",
+      "bio": "Nick Faldo was one of the most successful European golfers, winning 3 Masters titles (1989, 1990, 1996) and 6 major championships total. Known for his methodical approach and mental toughness, particularly in major championships, Faldo was famous for his ability to perform under pressure. His 1996 Masters victory, where he overcame Greg Norman's six-shot lead, is considered one of the greatest comebacks in golf history.",
+      "total_majors": 6,
+      "turned_pro": 1976,
+      "nationality": "ENG"
+    },
+    {
+      "name": "Ben Crenshaw",
+      "bio": "Ben Crenshaw won two Masters Tournaments (1984, 1995) and was renowned as one of the greatest putters in golf history. His 1995 victory came just days after serving as a pallbearer at his mentor Harvey Penick's funeral, making it an emotional triumph. Known for his deep knowledge of golf history and course design, Crenshaw later became a successful golf course architect. His gentle demeanor and love for the game made him a beloved figure in golf.",
+      "total_majors": 2,
+      "turned_pro": 1973,
+      "nationality": "USA"
+    },
+    {
+      "name": "Bernhard Langer",
+      "bio": "Bernhard Langer won two Masters Tournaments (1985, 1993) and was one of the most successful European golfers of his era. The German golfer was known for his meticulous preparation and mental toughness. Langer overcame putting problems early in his career to become one of the game's steadiest players. He later became the most successful player in Champions Tour history, demonstrating remarkable longevity in professional golf.",
+      "total_majors": 2,
+      "turned_pro": 1972,
+      "nationality": "GER"
+    },
+    {
+      "name": "Fred Couples",
+      "bio": "Fred Couples won the 1992 Masters Tournament with his smooth, effortless swing and natural talent. Known for his length off the tee and laid-back personality, 'Boom Boom' was one of the most popular players of his era. Couples' Masters victory capped off a remarkable year that included multiple PGA Tour wins. His swing was considered one of the most beautiful and natural in professional golf.",
+      "total_majors": 1,
+      "turned_pro": 1980,
+      "nationality": "USA"
+    },
+    {
+      "name": "Ian Woosnam",
+      "bio": "Ian Woosnam won the 1991 Masters Tournament at the height of his career when he was the world's #1 player. The Welsh golfer was known for his power despite his relatively small stature and his tenacious competitive spirit. Woosnam's Masters victory was the pinnacle of a career that included numerous European Tour wins. He was a key member of European Ryder Cup teams during the 1980s and 1990s.",
+      "total_majors": 1,
+      "turned_pro": 1976,
+      "nationality": "WAL"
+    },
+    {
+      "name": "Sandy Lyle",
+      "bio": "Sandy Lyle became the first British player to win the Masters Tournament when he captured the 1988 championship. The Scottish golfer was known for his powerful driving and excellent iron play. Lyle's Masters victory included a dramatic bunker shot on the 72nd hole that helped secure his triumph. He was one of the pioneers of European success in major championships during the 1980s.",
+      "total_majors": 2,
+      "turned_pro": 1977,
+      "nationality": "SCO"
+    },
+    {
+      "name": "Larry Mize",
+      "bio": "Larry Mize won the 1987 Masters Tournament in one of the most dramatic finishes in tournament history, holing a chip shot from 140 feet to defeat Greg Norman in a playoff. The Georgia native's knowledge of Augusta National's greens proved crucial in his victory. Mize's Masters triumph was the highlight of a solid professional career and remains one of the most memorable shots in major championship history.",
+      "total_majors": 1,
+      "turned_pro": 1982,
+      "nationality": "USA"
+    },
+    {
+      "name": "Jack Nicklaus",
+      "bio": "Jack Nicklaus, known as 'The Golden Bear', is widely regarded as the greatest golfer of all time with 18 major championships, including 6 Masters titles (1963, 1965, 1966, 1972, 1975, 1986). His Masters victories span from 1963 to 1986, with his final win at age 46 being one of the most memorable moments in golf history. Nicklaus's strategic mind, competitive fire, and clutch performance in major championships set the standard for greatness in professional golf.",
+      "total_majors": 18,
+      "turned_pro": 1961,
+      "nationality": "USA"
+    },
+    {
+      "name": "Seve Ballesteros",
+      "bio": "Seve Ballesteros won two Masters Tournaments (1980, 1983) and was one of the most charismatic and creative players in golf history. The Spanish golfer was known for his incredible short game, course management, and ability to hit remarkable recovery shots. Ballesteros brought European golf to prominence and inspired a generation of players. His passionate style and magnetic personality made him a global ambassador for the game.",
+      "total_majors": 5,
+      "turned_pro": 1974,
+      "nationality": "ESP"
+    },
+    {
+      "name": "Craig Stadler",
+      "bio": "Craig Stadler, known as 'The Walrus' for his distinctive mustache and stocky build, won the 1982 Masters Tournament. Known for his fiery temperament and accurate iron play, Stadler was one of the most consistent players of his era. His Masters victory came after a playoff and showcased his ability to perform under pressure. Stadler later became successful on the Champions Tour.",
+      "total_majors": 1,
+      "turned_pro": 1975,
+      "nationality": "USA"
+    },
+    {
+      "name": "Tom Watson",
+      "bio": "Tom Watson won two Masters Tournaments (1977, 1981) as part of a legendary career that included 8 major championships. Known for his exceptional putting and mental toughness, Watson dominated golf during the late 1970s and early 1980s. His rivalry with Jack Nicklaus produced some of golf's greatest moments. Watson's Masters victories showcased his ability to perform on golf's biggest stages.",
+      "total_majors": 8,
+      "turned_pro": 1971,
+      "nationality": "USA"
+    },
+    {
+      "name": "Fuzzy Zoeller",
+      "bio": "Fuzzy Zoeller won the 1979 Masters Tournament in just his second major championship appearance, displaying the relaxed demeanor and sense of humor that made him a fan favorite. Known for his laid-back attitude and excellent short game, Zoeller proved that you could win major championships while enjoying the experience. His Masters victory came in a playoff and launched a successful professional career.",
+      "total_majors": 2,
+      "turned_pro": 1973,
+      "nationality": "USA"
+    },
+    {
+      "name": "Gary Player",
+      "bio": "Gary Player, known as 'The Black Knight', won 3 Masters titles (1961, 1974, 1978) and was one of the 'Big Three' along with Palmer and Nicklaus. The South African won 9 major championships total and was known for his fitness, determination, and global approach to golf. Player was one of only five golfers to complete the career Grand Slam. His international success helped globalize the game of golf.",
+      "total_majors": 9,
+      "turned_pro": 1953,
+      "nationality": "RSA"
+    },
+    {
+      "name": "Raymond Floyd",
+      "bio": "Raymond Floyd won the 1976 Masters Tournament with a dominant performance, tying the tournament scoring record at the time. Known for his intense focus and clutch putting, Floyd was one of the most consistent players of his era. His Masters victory was achieved with steady, methodical play throughout the week. Floyd's career spanned multiple decades and included four major championships.",
+      "total_majors": 4,
+      "turned_pro": 1961,
+      "nationality": "USA"
+    },
+    {
+      "name": "Tommy Aaron",
+      "bio": "Tommy Aaron won the 1973 Masters Tournament, becoming the first Georgia native to capture the green jacket. His victory came during a week when the field struggled with difficult conditions, and Aaron's local knowledge of Augusta National proved valuable. Known for his steady play and excellent course management, Aaron's Masters triumph was the highlight of his professional career.",
+      "total_majors": 1,
+      "turned_pro": 1960,
+      "nationality": "USA"
+    },
+    {
+      "name": "Charles Coody",
+      "bio": "Charles Coody won the 1971 Masters Tournament after several close calls in major championships. The Texan was known for his precise iron play and steady demeanor under pressure. Coody's Masters victory came after he had finished second in the tournament twice before, proving his persistence and determination. His triumph was a popular win among his fellow competitors.",
+      "total_majors": 1,
+      "turned_pro": 1963,
+      "nationality": "USA"
+    },
+    {
+      "name": "Billy Casper",
+      "bio": "Billy Casper won the 1970 Masters Tournament as part of a remarkable career that included 3 major championships and 51 PGA Tour victories. Known for his exceptional putting and course management, Casper was one of the most underrated players of his era. His Masters victory showcased his ability to perform consistently under pressure and his deep understanding of tournament golf.",
+      "total_majors": 3,
+      "turned_pro": 1954,
+      "nationality": "USA"
+    },
+    {
+      "name": "George Archer",
+      "bio": "George Archer won the 1969 Masters Tournament with his exceptional putting skills, which earned him the nickname 'The Needle' for his tall, thin frame and precise putting stroke. Known as one of the greatest putters in golf history, Archer's Masters victory was built on his ability to read Augusta National's challenging greens. His calm demeanor and consistent play made him a respected competitor.",
+      "total_majors": 1,
+      "turned_pro": 1964,
+      "nationality": "USA"
+    },
+    {
+      "name": "Bob Goalby",
+      "bio": "Bob Goalby won the 1968 Masters Tournament in controversial circumstances when Roberto De Vicenzo signed an incorrect scorecard, giving Goalby the victory. Despite the controversy, Goalby was a worthy champion with a solid all-around game. Known for his professionalism and sportsmanship, Goalby handled the unusual situation with class and dignity throughout his career.",
+      "total_majors": 1,
+      "turned_pro": 1958,
+      "nationality": "USA"
+    },
+    {
+      "name": "Gay Brewer",
+      "bio": "Gay Brewer won the 1967 Masters Tournament after losing in a playoff the previous year. Known for his unorthodox swing and excellent short game, Brewer persevered through early career struggles to achieve major championship success. His Masters victory was a testament to his determination and ability to learn from setbacks. Brewer's triumph completed a remarkable journey from club professional to major champion.",
+      "total_majors": 1,
+      "turned_pro": 1956,
+      "nationality": "USA"
+    },
+    {
+      "name": "Arnold Palmer",
+      "bio": "Arnold Palmer, known as 'The King', won 4 Masters titles (1958, 1960, 1962, 1964) and was one of golf's most charismatic figures who helped popularize the sport on television. Known for his aggressive playing style and devoted fan base called 'Arnie's Army', Palmer's Masters victories helped establish the tournament as golf's most prestigious event. His rivalry with Jack Nicklaus and Gary Player created golf's golden era.",
+      "total_majors": 7,
+      "turned_pro": 1954,
+      "nationality": "USA"
+    },
+    {
+      "name": "Art Wall Jr.",
+      "bio": "Art Wall Jr. won the 1959 Masters Tournament with a dramatic final-round comeback, making five birdies in the last six holes. Known for his accuracy with irons and his ability to hit shots close to the pin, Wall was one of the most consistent players of his era. His Masters victory was achieved through clutch play when it mattered most, showcasing his competitive spirit.",
+      "total_majors": 1,
+      "turned_pro": 1949,
+      "nationality": "USA"
+    },
+    {
+      "name": "Doug Ford",
+      "bio": "Doug Ford won the 1957 Masters Tournament and was known for his excellent short game and competitive fire. A fierce competitor who maximized his talent through hard work and determination, Ford's Masters victory came during an era of great champions. His success was built on precise iron play and exceptional putting, making him a formidable competitor in stroke play events.",
+      "total_majors": 2,
+      "turned_pro": 1949,
+      "nationality": "USA"
+    },
+    {
+      "name": "Jack Burke Jr.",
+      "bio": "Jack Burke Jr. won the 1956 Masters Tournament with a remarkable comeback, overcoming an eight-shot deficit entering the final round. Known for his mental toughness and strategic approach to the game, Burke's Masters victory was one of the greatest comebacks in tournament history. He was also a successful teacher and mentor to many professional golfers throughout his career.",
+      "total_majors": 2,
+      "turned_pro": 1949,
+      "nationality": "USA"
+    },
+    {
+      "name": "Cary Middlecoff",
+      "bio": "Cary Middlecoff won the 1955 Masters Tournament as part of a successful career that included 3 major championships. A former dentist who turned to professional golf, Middlecoff was known for his methodical approach and excellent iron play. His Masters victory showcased his ability to perform under pressure and his deep understanding of course management at Augusta National.",
+      "total_majors": 3,
+      "turned_pro": 1947,
+      "nationality": "USA"
+    },
+    {
+      "name": "Sam Snead",
+      "bio": "Sam Snead won 3 Masters titles (1949, 1952, 1954) and was one of the greatest golfers of his era, holding the record for most PGA Tour wins (82) until Tiger Woods tied it. Known for his smooth swing and longevity in the game, Snead's natural athletic ability made him one of golf's most gifted players. His Masters victories spanned different eras of his career, demonstrating his remarkable consistency.",
+      "total_majors": 7,
+      "turned_pro": 1934,
+      "nationality": "USA"
+    },
+    {
+      "name": "Ben Hogan",
+      "bio": "Ben Hogan won 2 Masters titles (1951, 1953) and was one of the greatest ball-strikers in golf history, with 9 major championships total. His dedication to practice and course management was legendary, and his comeback from a near-fatal car accident is one of golf's greatest stories. Hogan's 1953 Masters victory was part of his incredible Triple Crown year, winning three of the four major championships.",
+      "total_majors": 9,
+      "turned_pro": 1930,
+      "nationality": "USA"
+    },
+    {
+      "name": "Jimmy Demaret",
+      "bio": "Jimmy Demaret was the first three-time Masters champion, winning in 1940, 1947, and 1950. Known for his colorful personality and even more colorful wardrobe, he helped bring entertainment value to professional golf. Demaret was also an excellent iron player and putter who could rise to the occasion in big moments. His success at Augusta National made him one of the tournament's early legends.",
+      "total_majors": 3,
+      "turned_pro": 1935,
+      "nationality": "USA"
+    },
+    {
+      "name": "Claude Harmon",
+      "bio": "Claude Harmon won the 1948 Masters Tournament and was renowned as one of the greatest golf instructors in history. Known for his exceptional ball-striking and deep understanding of the golf swing, Harmon taught many tour professionals and celebrities. His Masters victory was achieved through precise play and excellent course management at Augusta National.",
+      "total_majors": 1,
+      "turned_pro": 1940,
+      "nationality": "USA"
+    },
+    {
+      "name": "Herman Keiser",
+      "bio": "Herman Keiser won the 1946 Masters Tournament, the first Masters held after World War II. Known for his steady play and excellent putting, Keiser was a consistent performer during the 1940s. His Masters victory came during a time when many top players were returning from military service, making his triumph all the more impressive. Keiser's calm demeanor served him well in pressure situations.",
+      "total_majors": 1,
+      "turned_pro": 1935,
+      "nationality": "USA"
+    },
+    {
+      "name": "Byron Nelson",
+      "bio": "Byron Nelson won 2 Masters titles (1937, 1942) and was one of the greatest golfers of all time, famous for his incredible 1945 season when he won 18 tournaments including 11 consecutive victories. Known for his precise ball-striking and gentlemanly conduct, Nelson set the standard for consistency in professional golf. His Masters victories came during different phases of his career, showcasing his sustained excellence.",
+      "total_majors": 5,
+      "turned_pro": 1932,
+      "nationality": "USA"
+    },
+    {
+      "name": "Craig Wood",
+      "bio": "Craig Wood won the 1941 Masters Tournament after years of heartbreak in major championships, having finished second in each of the four majors before finally breaking through. Known for his powerful driving and fighting spirit, Wood's Masters victory was a popular triumph among his peers. His perseverance through numerous close calls made his eventual major championship success all the sweeter.",
+      "total_majors": 2,
+      "turned_pro": 1925,
+      "nationality": "USA"
+    },
+    {
+      "name": "Ralph Guldahl",
+      "bio": "Ralph Guldahl won the 1939 Masters Tournament as part of a remarkable three-year stretch that included three major championships. Known for his methodical approach and excellent iron play, Guldahl was one of the top players of the late 1930s. His Masters victory showcased his ability to perform under pressure and his deep understanding of tournament golf strategy.",
+      "total_majors": 3,
+      "turned_pro": 1931,
+      "nationality": "USA"
+    },
+    {
+      "name": "Henry Picard",
+      "bio": "Henry Picard won the 1938 Masters Tournament and was known for his excellent teaching ability and mentorship of other professionals. A fine player in his own right, Picard was instrumental in helping Sam Snead and Ben Hogan develop their games. His Masters victory was achieved through steady, consistent play and excellent course management at Augusta National.",
+      "total_majors": 2,
+      "turned_pro": 1926,
+      "nationality": "USA"
+    },
+    {
+      "name": "Horton Smith",
+      "bio": "Horton Smith won the inaugural Masters Tournament in 1934 and successfully defended his title in 1936, making him the first two-time Masters champion. Known for his exceptional putting skills, Smith was one of the finest players of the 1930s. His connection to the Masters Tournament as its first champion makes him a significant figure in golf history. Smith later became a respected teacher and club professional.",
+      "total_majors": 2,
+      "turned_pro": 1926,
+      "nationality": "USA"
+    },
+    {
+      "name": "Gene Sarazen",
+      "bio": "Gene Sarazen won the 1935 Masters Tournament with one of the most famous shots in golf history - the 'Shot Heard 'Round the World' - a double eagle on the 15th hole in the final round. Known for inventing the sand wedge and being one of the first players to complete the career Grand Slam, Sarazen was a golf pioneer. His Masters victory helped establish the tournament's reputation for dramatic finishes.",
+      "total_majors": 7,
+      "turned_pro": 1920,
+      "nationality": "USA"
+    }
+  ]
+}{
+  "tournaments": [
     {"year": 2024, "winner": "Scottie Scheffler", "score": 277, "to_par": -11, "nationality": "USA"},
     {"year": 2023, "winner": "Jon Rahm", "score": 276, "to_par": -12, "nationality": "ESP"},
     {"year": 2022, "winner": "Scottie Scheffler", "score": 278, "to_par": -10, "nationality": "USA"},
