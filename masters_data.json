@@ -91,6 +91,13 @@
     {"year": 1934, "winner": "Horton Smith", "score": 284, "to_par": -4, "nationality": "USA"}
   ],
   "golfers": [
+      {
+      "name": "Rory McIlroy",
+      "bio": "Rory McIlroy is a Northern Irish professional golfer who has been one of the world's top players for over a decade. Despite winning 4 major championships (2011 U.S. Open, 2012 PGA Championship, 2014 Open Championship, 2014 PGA Championship), the Masters Tournament remains the one major that has eluded him in his quest to complete the career Grand Slam. McIlroy has come tantalizingly close at Augusta National multiple times, including finishing second in 2022. Known for his powerful driving, excellent iron play, and mental toughness, the former world #1 continues to be a perennial contender at the Masters. His pursuit of the green jacket has become one of golf's most compelling storylines.",
+      "total_majors": 4,
+      "turned_pro": 2007,
+      "nationality": "NIR"
+    },
     {
       "name": "Scottie Scheffler",
       "bio": "Scottie Scheffler has emerged as one of golf's brightest stars, becoming the world's #1 ranked player. His consistent play and mental toughness have led to multiple PGA Tour victories including back-to-back Masters wins in 2022 and 2024.",
