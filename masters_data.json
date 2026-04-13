@@ -276,11 +276,11 @@
     },
     {
       "name": "Rory McIlroy",
-      "bio": "Rory McIlroy is a Northern Irish professional golfer who completed the career Grand Slam with his emotional 2025 Masters Tournament victory. After years of heartbreak at Augusta National, including a devastating final-round collapse in 2011 and multiple close calls, McIlroy finally captured the elusive green jacket that had defined his career. With 5 major championships (2011 U.S. Open, 2012 PGA Championship, 2014 Open Championship, 2014 PGA Championship, 2025 Masters), the former world #1 is known for his powerful driving, excellent iron play, and mental toughness. His Masters victory was one of the most celebrated wins in recent golf history, completing one of the sport's most compelling storylines.",
-      "total_majors": 5,
+      "bio": "Rory McIlroy completed one of golf's greatest achievements by winning back-to-back Masters Tournaments in 2025 and 2026, becoming just the fourth golfer in tournament history to accomplish this feat and the first since Tiger Woods in 2002. After years of heartbreak at Augusta National, including a devastating final-round collapse in 2011, McIlroy finally captured the green jacket in 2025 and defended it with a dramatic victory in 2026. His iconic shot on hole 12 during Sunday's final round separated him from the pack, finishing at 12-under and one stroke clear of Scottie Scheffler. With 6 major championships (2011 U.S. Open, 2012 PGA Championship, 2014 Open Championship, 2014 PGA Championship, 2025 Masters, 2026 Masters), McIlroy joins Jack Nicklaus, Nick Faldo, and Tiger Woods as the only repeat Masters champions in history.",
+      "total_majors": 6,
       "turned_pro": 2007,
       "nationality": "NIR"
-    },
+    }
     {
       "name": "Phil Mickelson",
       "bio": "Phil Mickelson, known as 'Lefty', is a fan favorite with 6 major championships including 3 Masters titles. Known for his aggressive play style and short game wizardry.",
