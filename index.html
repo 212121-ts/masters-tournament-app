@@ -27,92 +27,76 @@
         .smooth-scroll {
             scroll-behavior: smooth;
         }
-        
+
         /* Dark mode styles */
         .dark {
             background-color: #1a1a1a;
             color: #e5e5e5;
         }
-        
+
         .dark .bg-gray-50 {
             background-color: #1a1a1a;
         }
-        
+
         .dark .bg-white {
             background-color: #2d2d2d;
             color: #e5e5e5;
         }
-        
+
         .dark .text-gray-800 {
             color: #e5e5e5;
         }
-        
+
         .dark .text-gray-600 {
             color: #a0a0a0;
         }
-        
+
         .dark .text-gray-500 {
             color: #8a8a8a;
         }
-        
+
         .dark .text-gray-700 {
             color: #b0b0b0;
         }
-        
+
         .dark .border-gray-300 {
             border-color: #4a4a4a;
         }
-        
+
         .dark .bg-gray-100 {
             background-color: #3a3a3a;
         }
-        
+
         .dark .bg-gray-50 {
             background-color: #2a2a2a;
         }
-        
+
         .dark .card-shadow {
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
-        
+
         .dark input {
             background-color: #3a3a3a;
             color: #e5e5e5;
             border-color: #4a4a4a;
         }
-        
+
         .dark input::placeholder {
             color: #8a8a8a;
         }
-        
-        .dark .bg-yellow-50 {
-            background-color: #3a3020;
-        }
-        
-        .dark .border-yellow-200 {
-            border-color: #6a5a20;
-        }
-        
-        .dark .text-yellow-800 {
-            color: #f0d030;
-        }
-        
+
         .dark .bg-green-50 {
             background-color: #203a20;
         }
-        
+
         .dark .border-green-200 {
             border-color: #206a20;
         }
-        
-        .dark .text-green-800 {
-            color: #30f030;
-        }
-        
+
         .dark .text-green-600 {
             color: #40c040;
         }
-        
+
         .dark .text-green-800 {
             color: #50d050;
         }
@@ -128,13 +112,13 @@
                     🌙
                 </button>
             </div>
-            
+
             <!-- Search Bar -->
             <div class="mt-4">
                 <div class="relative">
-                    <input 
-                        type="text" 
-                        id="searchInput" 
+                    <input
+                        type="text"
+                        id="searchInput"
                         placeholder="Search by year (e.g. 2023) or golfer name (e.g. Tiger Woods)"
                         class="w-full px-4 py-3 pr-12 rounded-lg text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/50"
                     />
@@ -198,84 +182,17 @@
         </div>
     </div>
 
-    <!-- Admin Panel Modal -->
-    <div id="adminModal" class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 hidden z-50">
-        <div class="bg-white rounded-lg max-w-md w-full">
-            <div class="p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold text-masters-green">🔐 Admin Access Required</h2>
-                    <button id="closeAdminModal" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
-                </div>
-                
-                <!-- Login Form (shown first) -->
-                <div id="loginForm" class="space-y-4">
-                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
-                        <p class="text-sm text-yellow-800">🔒 Admin credentials required to add tournament results</p>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Username</label>
-                        <input type="text" id="adminUsername" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Password</label>
-                        <input type="password" id="adminPassword" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" required>
-                    </div>
-                    <button id="loginBtn" class="w-full bg-masters-green text-white py-2 px-4 rounded-md hover:bg-masters-light transition-colors">
-                        🔓 Login as Admin
-                    </button>
-                    <div id="loginError" class="text-red-600 text-sm hidden"></div>
-                </div>
-
-                <!-- Tournament Form (shown after login) -->
-                <form id="adminForm" class="space-y-4 hidden">
-                    <div class="bg-green-50 border border-green-200 rounded-lg p-3 mb-4">
-                        <p class="text-sm text-green-800">✅ Admin authenticated - You can now add tournaments</p>
-                        <button type="button" id="logoutBtn" class="text-sm text-green-600 hover:text-green-800 underline mt-1">Logout</button>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Year</label>
-                        <input type="number" id="adminYear" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Winner</label>
-                        <input type="text" id="adminWinner" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Score</label>
-                        <input type="number" id="adminScore" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">To Par</label>
-                        <input type="number" id="adminToPar" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Nationality</label>
-                        <input type="text" id="adminNationality" placeholder="USA" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md">
-                    </div>
-                    <button type="submit" class="w-full bg-masters-green text-white py-2 px-4 rounded-md hover:bg-masters-light transition-colors">
-                        ➕ Add Tournament Result
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Floating Admin Button -->
-    <button id="adminBtn" class="fixed bottom-6 right-6 bg-masters-green text-white p-3 rounded-full shadow-lg hover:bg-masters-light transition-colors z-40" title="Admin Access Required">
-        🔐
-    </button>
-
     <script>
-        // API Configuration - UPDATE THIS URL TO YOUR RENDER BACKEND URL
-        const API_BASE_URL = ''; // CHANGE THIS
-        
+        // Data source: a plain JSON file sitting next to this page.
+        // To update the app, edit masters_data.json and commit it. That's the whole process.
+        const DATA_URL = 'masters_data.json';
+
         // App State
-        let currentData = [];
-        let allGolfers = [];
+        let currentData = [];      // tournaments, newest year first
+        let golfersByName = {};    // bio lookup
         let currentStats = {};
         let displayedItems = 10;
         let isDarkMode = false;
-        let adminCredentials = null;
 
         // DOM Elements
         const searchInput = document.getElementById('searchInput');
@@ -283,132 +200,72 @@
         const tournamentResults = document.getElementById('tournamentResults');
         const loadMoreBtn = document.getElementById('loadMoreBtn');
         const bioModal = document.getElementById('bioModal');
-        const adminModal = document.getElementById('adminModal');
         const darkModeToggle = document.getElementById('darkModeToggle');
 
-        // API Functions
-        async function fetchFromAPI(endpoint, options = {}) {
+        // Data Loading
+        async function loadData() {
+            const response = await fetch(DATA_URL, { cache: 'no-cache' });
+
+            if (!response.ok) {
+                throw new Error(`Could not load ${DATA_URL} (status ${response.status})`);
+            }
+
+            let data;
             try {
-                console.log(`Fetching from API: ${API_BASE_URL}${endpoint}`);
-                const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        ...options.headers
-                    },
-                    ...options
-                });
-                
-                console.log(`API Response status: ${response.status}`);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                console.log(`API Response data:`, data);
-                return data;
-            } catch (error) {
-                console.error('API Error:', error);
-                showErrorMessage(`Unable to connect to the database: ${error.message}`);
-                return null;
+                data = await response.json();
+            } catch (e) {
+                throw new Error(`${DATA_URL} is not valid JSON — check for a missing comma or bracket.`);
             }
-        }
 
-        async function loadTournamentData() {
-            console.log('Loading tournament data from API...');
-            const data = await fetchFromAPI('/tournaments');
-            if (data && Array.isArray(data)) {
-                console.log(`Loaded ${data.length} tournaments from API`);
-                // Convert API response to match frontend format
-                currentData = data.map(item => ({
-                    year: item.year,
-                    winner: item.winner,
-                    score: item.score,
-                    toPar: item.to_par, // Note: API uses 'to_par', frontend uses 'toPar'
-                    nationality: item.nationality
-                }));
-                console.log('Tournament data converted successfully');
-            } else {
-                console.error('No tournament data received from API');
-                showErrorMessage('No tournament data available');
-                currentData = [];
-            }
-        }
+            const tournaments = Array.isArray(data.tournaments) ? data.tournaments : [];
+            const golfers = Array.isArray(data.golfers) ? data.golfers : [];
 
-        async function loadStats() {
-            console.log('Loading stats from API...');
-            const stats = await fetchFromAPI('/stats');
-            if (stats) {
-                console.log('Stats loaded successfully:', stats);
-                currentStats = stats;
-            } else {
-                console.error('No stats received from API');
-                currentStats = {};
-            }
-        }
-
-        async function loadGolfers() {
-            console.log('Loading golfers from API...');
-            const golfers = await fetchFromAPI('/golfers');
-            if (golfers && Array.isArray(golfers)) {
-                console.log(`Loaded ${golfers.length} golfers from API`);
-                allGolfers = golfers;
-            } else {
-                console.error('No golfer data received from API');
-                allGolfers = [];
-            }
-        }
-
-        async function searchAPI(query) {
-            const results = await fetchFromAPI(`/search?q=${encodeURIComponent(query)}`);
-            if (results) {
-                return results.map(item => ({
+            currentData = tournaments
+                .map(item => ({
                     year: item.year,
                     winner: item.winner,
                     score: item.score,
                     toPar: item.to_par,
                     nationality: item.nationality
-                }));
-            }
-            return [];
+                }))
+                .sort((a, b) => b.year - a.year);
+
+            golfersByName = {};
+            golfers.forEach(golfer => {
+                golfersByName[golfer.name] = golfer;
+            });
+
+            calculateStats();
         }
 
-        async function addTournamentAPI(tournament, credentials) {
-            try {
-                console.log('Adding tournament via API...', tournament);
-                const authHeader = 'Basic ' + btoa(`${credentials.username}:${credentials.password}`);
-                
-                const response = await fetch(`${API_BASE_URL}/admin/tournaments`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': authHeader,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        year: tournament.year,
-                        winner: tournament.winner,
-                        score: tournament.score,
-                        to_par: tournament.toPar,
-                        nationality: tournament.nationality
-                    })
-                });
-                
-                console.log(`Add tournament response status: ${response.status}`);
-                
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    console.error('Add tournament failed:', response.status, errorText);
-                    throw new Error(`HTTP ${response.status}: ${errorText}`);
-                }
-                
-                const data = await response.json();
-                console.log('Tournament added successfully:', data);
-                return data;
-                
-            } catch (error) {
-                console.error('Error in addTournamentAPI:', error);
-                throw error;
+        // Statistics — same four numbers the backend used to compute
+        function calculateStats() {
+            if (currentData.length === 0) {
+                currentStats = { total_years: 0, unique_winners: 0, best_score: 0, most_wins: 0, most_wins_golfer: '' };
+                return;
             }
+
+            const winCounts = {};
+            currentData.forEach(item => {
+                winCounts[item.winner] = (winCounts[item.winner] || 0) + 1;
+            });
+
+            let mostWinsGolfer = '';
+            let mostWins = 0;
+            Object.entries(winCounts).forEach(([golfer, wins]) => {
+                if (wins > mostWins) {
+                    mostWins = wins;
+                    mostWinsGolfer = golfer;
+                }
+            });
+
+            currentStats = {
+                total_years: currentData.length,
+                unique_winners: Object.keys(winCounts).length,
+                best_score: Math.min(...currentData.map(item => item.score)),
+                most_wins: mostWins,
+                most_wins_golfer: mostWinsGolfer
+            };
         }
 
         function showErrorMessage(message) {
@@ -416,42 +273,31 @@
             errorDiv.className = 'fixed top-20 right-4 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg z-50';
             errorDiv.textContent = message;
             document.body.appendChild(errorDiv);
-            
+
             setTimeout(() => {
                 errorDiv.remove();
             }, 5000);
         }
 
-        function showSuccessMessage(message) {
-            const successDiv = document.createElement('div');
-            successDiv.className = 'fixed top-20 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50';
-            successDiv.textContent = message;
-            document.body.appendChild(successDiv);
-            
-            setTimeout(() => {
-                successDiv.remove();
-            }, 3000);
-        }
-
         // Initialize App
         async function initApp() {
-            // Load dark mode preference first
             loadDarkModePreference();
-            
-            // Show loading state
+
             tournamentResults.innerHTML = '<div class="text-center py-8"><div class="text-masters-green text-lg">Loading tournament data...</div></div>';
-            
-            // Load data from API
-            await Promise.all([
-                loadTournamentData(),
-                loadStats(),
-                loadGolfers()
-            ]);
-            
+
+            try {
+                await loadData();
+            } catch (error) {
+                console.error(error);
+                tournamentResults.innerHTML = `<div class="text-center py-8"><div class="text-gray-600">Tournament data could not be loaded.<br><span class="text-sm">${error.message}</span></div></div>`;
+                showErrorMessage(error.message);
+                return;
+            }
+
             renderStats();
             renderResults();
             setupEventListeners();
-            
+
             if (currentData.length > displayedItems) {
                 loadMoreBtn.classList.remove('hidden');
             }
@@ -459,37 +305,21 @@
 
         // Render Statistics
         function renderStats() {
-            if (currentStats.total_years) {
-                document.getElementById('totalYears').textContent = currentStats.total_years;
-                document.getElementById('uniqueWinners').textContent = currentStats.unique_winners;
-                document.getElementById('bestScore').textContent = currentStats.best_score;
-                document.getElementById('mostWins').textContent = currentStats.most_wins;
-            } else {
-                // Fallback calculation if API stats not available
-                const uniqueWinners = new Set(currentData.map(item => item.winner)).size;
-                const bestScore = Math.min(...currentData.map(item => item.score));
-                const winCounts = {};
-                currentData.forEach(item => {
-                    winCounts[item.winner] = (winCounts[item.winner] || 0) + 1;
-                });
-                const mostWins = Math.max(...Object.values(winCounts));
-
-                document.getElementById('totalYears').textContent = currentData.length;
-                document.getElementById('uniqueWinners').textContent = uniqueWinners;
-                document.getElementById('bestScore').textContent = bestScore;
-                document.getElementById('mostWins').textContent = mostWins;
-            }
+            document.getElementById('totalYears').textContent = currentStats.total_years;
+            document.getElementById('uniqueWinners').textContent = currentStats.unique_winners;
+            document.getElementById('bestScore').textContent = currentStats.best_score;
+            document.getElementById('mostWins').textContent = currentStats.most_wins;
         }
 
         // Render Tournament Results
         function renderResults(data = currentData.slice(0, displayedItems)) {
             tournamentResults.innerHTML = '';
-            
+
             if (data.length === 0) {
                 tournamentResults.innerHTML = '<div class="text-center py-8"><div class="text-gray-500">No tournaments found.</div></div>';
                 return;
             }
-            
+
             data.forEach(tournament => {
                 const card = createTournamentCard(tournament);
                 tournamentResults.appendChild(card);
@@ -501,10 +331,10 @@
             const card = document.createElement('div');
             card.className = 'bg-white rounded-lg p-6 card-shadow hover:shadow-lg transition-shadow cursor-pointer';
             card.setAttribute('data-year', tournament.year);
-            
+
             const parColor = tournament.toPar < 0 ? 'text-green-600' : tournament.toPar > 0 ? 'text-red-600' : 'text-gray-600';
             const parText = tournament.toPar < 0 ? `${tournament.toPar}` : tournament.toPar > 0 ? `+${tournament.toPar}` : 'E';
-            
+
             card.innerHTML = `
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
                     <div class="flex-1 mb-4 md:mb-0">
@@ -538,32 +368,27 @@
         }
 
         // Show Golfer Bio
-        async function showGolferBio(golferName) {
+        function showGolferBio(golferName) {
             const bioNameEl = document.getElementById('bioName');
             const bioContentEl = document.getElementById('bioContent');
-            
+
             bioNameEl.textContent = golferName;
-            bioContentEl.innerHTML = '<div class="text-center py-4">Loading...</div>';
-            
-            // Try to get golfer data from API first
-            let golferData = null;
-            try {
-                golferData = await fetchFromAPI(`/golfers/${encodeURIComponent(golferName)}`);
-            } catch (error) {
-                console.log('Golfer not found in API, using fallback data');
-            }
-            
+
+            const golferData = golfersByName[golferName];
+            const wins = getMastersWins(golferName);
+            const winChips = wins.map(year => `<span class="bg-masters-green text-white px-3 py-1 rounded-full text-sm">${year}</span>`).join('');
+
             if (golferData) {
                 bioContentEl.innerHTML = `
                     <div class="space-y-4">
                         ${golferData.bio ? `<p class="text-gray-700 leading-relaxed">${golferData.bio}</p>` : '<p class="text-gray-700">Bio information not available.</p>'}
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div class="bg-gray-50 p-4 rounded-lg text-center">
-                                <div class="text-2xl font-bold text-masters-green">${golferData.masters_wins.length}</div>
+                                <div class="text-2xl font-bold text-masters-green">${wins.length}</div>
                                 <div class="text-sm text-gray-600">Masters Wins</div>
                             </div>
                             <div class="bg-gray-50 p-4 rounded-lg text-center">
-                                <div class="text-2xl font-bold text-masters-green">${golferData.total_majors || golferData.masters_wins.length}</div>
+                                <div class="text-2xl font-bold text-masters-green">${golferData.total_majors || wins.length}</div>
                                 <div class="text-sm text-gray-600">Total Majors</div>
                             </div>
                             <div class="bg-gray-50 p-4 rounded-lg text-center">
@@ -574,25 +399,23 @@
                         <div>
                             <h4 class="font-semibold text-masters-green mb-2">Masters Victories:</h4>
                             <div class="flex flex-wrap gap-2">
-                                ${golferData.masters_wins.map(year => `<span class="bg-masters-green text-white px-3 py-1 rounded-full text-sm">${year}</span>`).join('')}
+                                ${winChips}
                             </div>
                         </div>
                     </div>
                 `;
             } else {
-                // Fallback to local data
-                const wins = getMastersWins(golferName);
                 bioContentEl.innerHTML = `
                     <p class="text-gray-700">Bio information not available for ${golferName}.</p>
                     <div class="mt-4">
                         <h4 class="font-semibold text-masters-green mb-2">Masters Victories:</h4>
                         <div class="flex flex-wrap gap-2">
-                            ${wins.map(year => `<span class="bg-masters-green text-white px-3 py-1 rounded-full text-sm">${year}</span>`).join('')}
+                            ${winChips}
                         </div>
                     </div>
                 `;
             }
-            
+
             bioModal.classList.remove('hidden');
         }
 
@@ -602,7 +425,7 @@
         }
 
         // Search Functionality
-        async function handleSearch(query) {
+        function handleSearch(query) {
             if (!query.trim()) {
                 displayedItems = 10;
                 renderResults();
@@ -610,27 +433,21 @@
                 return;
             }
 
-            // Try API search first, fall back to local search
-            let results = await searchAPI(query);
-            if (!results || results.length === 0) {
-                results = searchTournaments(query);
-            }
-            
-            renderResults(results);
+            renderResults(searchTournaments(query));
             loadMoreBtn.classList.add('hidden');
         }
 
         function searchTournaments(query) {
             const searchTerm = query.toLowerCase().trim();
-            
+
             // Check if it's a year search
             if (/^\d{4}$/.test(searchTerm)) {
                 const year = parseInt(searchTerm);
                 return currentData.filter(item => item.year === year);
             }
-            
+
             // Search by golfer name
-            return currentData.filter(item => 
+            return currentData.filter(item =>
                 item.winner.toLowerCase().includes(searchTerm)
             );
         }
@@ -666,7 +483,7 @@
                 return;
             }
 
-            searchSuggestions.innerHTML = suggestions.slice(0, 8).map(suggestion => 
+            searchSuggestions.innerHTML = suggestions.slice(0, 8).map(suggestion =>
                 `<div class="px-4 py-2 hover:bg-gray-100 cursor-pointer suggestion-item" data-type="${suggestion.type}" data-value="${suggestion.value}">
                     ${suggestion.display}
                 </div>`
@@ -675,102 +492,12 @@
             searchSuggestions.classList.remove('hidden');
         }
 
-        // Admin Functions
-        let isAdminAuthenticated = false;
-
-        async function authenticateAdmin(username, password) {
-            // Test authentication by making a simple API call
-            try {
-                console.log('Testing admin authentication...');
-                const authHeader = 'Basic ' + btoa(`${username}:${password}`);
-                
-                const response = await fetch(`${API_BASE_URL}/admin/logs`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': authHeader,
-                        'Content-Type': 'application/json'
-                    }
-                });
-                
-                console.log(`Auth test response status: ${response.status}`);
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log('Authentication successful');
-                    adminCredentials = { username, password };
-                    isAdminAuthenticated = true;
-                    return true;
-                } else {
-                    console.error('Authentication failed:', response.status, response.statusText);
-                    return false;
-                }
-            } catch (error) {
-                console.error('Authentication error:', error);
-                return false;
-            }
-        }
-
-        function showAdminForm() {
-            document.getElementById('loginForm').classList.add('hidden');
-            document.getElementById('adminForm').classList.remove('hidden');
-        }
-
-        function showLoginForm() {
-            document.getElementById('loginForm').classList.remove('hidden');
-            document.getElementById('adminForm').classList.add('hidden');
-            document.getElementById('loginError').classList.add('hidden');
-            document.getElementById('adminUsername').value = '';
-            document.getElementById('adminPassword').value = '';
-            isAdminAuthenticated = false;
-            adminCredentials = null;
-        }
-
-        async function addTournamentResult(year, winner, score, toPar, nationality = "USA") {
-            if (!isAdminAuthenticated || !adminCredentials) {
-                showErrorMessage('Admin authentication required!');
-                return;
-            }
-
-            const newResult = {
-                year: parseInt(year),
-                winner: winner.trim(),
-                score: parseInt(score),
-                toPar: parseInt(toPar),
-                nationality: nationality || "USA"
-            };
-
-            try {
-                const response = await addTournamentAPI(newResult, adminCredentials);
-                
-                if (response) {
-                    // Refresh data from API
-                    await Promise.all([
-                        loadTournamentData(),
-                        loadStats()
-                    ]);
-                    
-                    renderStats();
-                    renderResults();
-                    adminModal.classList.add('hidden');
-                    showLoginForm(); // Reset to login form
-                    
-                    showSuccessMessage(`Successfully added ${winner}'s victory in ${year}!`);
-                } else {
-                    throw new Error('Failed to add tournament');
-                }
-            } catch (error) {
-                console.error('Error adding tournament:', error);
-                showErrorMessage('Failed to add tournament. Please check your credentials.');
-                showLoginForm(); // Reset on error
-            }
-        }
-
         // Event Listeners
         function setupEventListeners() {
             // Search functionality
-            searchInput.addEventListener('input', async (e) => {
+            searchInput.addEventListener('input', (e) => {
                 const query = e.target.value;
-                await handleSearch(query);
+                handleSearch(query);
                 showSearchSuggestions(query);
             });
 
@@ -788,18 +515,11 @@
             });
 
             // Search suggestions click
-            searchSuggestions.addEventListener('click', async (e) => {
-                if (e.target.classList.contains('suggestion-item')) {
-                    const value = e.target.dataset.value;
-                    const type = e.target.dataset.type;
-                    
-                    if (type === 'year') {
-                        searchInput.value = value;
-                    } else {
-                        searchInput.value = value;
-                    }
-                    
-                    await handleSearch(searchInput.value);
+            searchSuggestions.addEventListener('click', (e) => {
+                const item = e.target.closest('.suggestion-item');
+                if (item) {
+                    searchInput.value = item.dataset.value;
+                    handleSearch(searchInput.value);
                     searchSuggestions.classList.add('hidden');
                 }
             });
@@ -808,7 +528,7 @@
             loadMoreBtn.addEventListener('click', () => {
                 displayedItems += 10;
                 renderResults();
-                
+
                 if (displayedItems >= currentData.length) {
                     loadMoreBtn.classList.add('hidden');
                 }
@@ -819,95 +539,13 @@
                 bioModal.classList.add('hidden');
             });
 
-            // Admin functionality
-            document.getElementById('adminBtn').addEventListener('click', () => {
-                adminModal.classList.remove('hidden');
-                if (!isAdminAuthenticated) {
-                    showLoginForm();
-                } else {
-                    showAdminForm();
-                }
-            });
-
-            document.getElementById('closeAdminModal').addEventListener('click', () => {
-                adminModal.classList.add('hidden');
-                showLoginForm(); // Always reset to login form when closing
-            });
-
-            // Login button
-            document.getElementById('loginBtn').addEventListener('click', async () => {
-                const username = document.getElementById('adminUsername').value.trim();
-                const password = document.getElementById('adminPassword').value;
-                const errorDiv = document.getElementById('loginError');
-
-                if (!username || !password) {
-                    errorDiv.textContent = 'Please enter both username and password';
-                    errorDiv.classList.remove('hidden');
-                    return;
-                }
-
-                const loginBtn = document.getElementById('loginBtn');
-                loginBtn.textContent = '🔄 Authenticating...';
-                loginBtn.disabled = true;
-
-                console.log('Attempting login with username:', username);
-                const isValid = await authenticateAdmin(username, password);
-                
-                if (isValid) {
-                    console.log('Login successful, showing admin form');
-                    showAdminForm();
-                    errorDiv.classList.add('hidden');
-                } else {
-                    console.log('Login failed');
-                    errorDiv.textContent = 'Invalid credentials. Please check username and password.';
-                    errorDiv.classList.remove('hidden');
-                }
-
-                loginBtn.textContent = '🔓 Login as Admin';
-                loginBtn.disabled = false;
-            });
-
-            // Logout button
-            document.getElementById('logoutBtn').addEventListener('click', () => {
-                showLoginForm();
-            });
-
-            // Enter key login
-            document.getElementById('adminPassword').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    document.getElementById('loginBtn').click();
-                }
-            });
-
-            // Admin form
-            document.getElementById('adminForm').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const year = document.getElementById('adminYear').value;
-                const winner = document.getElementById('adminWinner').value;
-                const score = document.getElementById('adminScore').value;
-                const toPar = document.getElementById('adminToPar').value;
-                const nationality = document.getElementById('adminNationality').value || 'USA';
-                
-                await addTournamentResult(year, winner, score, toPar, nationality);
-                
-                // Clear form
-                e.target.reset();
-            });
-
             // Dark mode toggle
             darkModeToggle.addEventListener('click', toggleDarkMode);
 
-            // Close modals on outside click
+            // Close modal on outside click
             bioModal.addEventListener('click', (e) => {
                 if (e.target === bioModal) {
                     bioModal.classList.add('hidden');
-                }
-            });
-
-            adminModal.addEventListener('click', (e) => {
-                if (e.target === adminModal) {
-                    adminModal.classList.add('hidden');
-                    showLoginForm(); // Reset to login form when clicking outside
                 }
             });
 
@@ -915,10 +553,9 @@
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
                     bioModal.classList.add('hidden');
-                    adminModal.classList.add('hidden');
                     searchSuggestions.classList.add('hidden');
                 }
-                
+
                 if (e.key === '/' && e.target !== searchInput) {
                     e.preventDefault();
                     searchInput.focus();
@@ -931,8 +568,7 @@
             isDarkMode = !isDarkMode;
             document.documentElement.classList.toggle('dark', isDarkMode);
             darkModeToggle.textContent = isDarkMode ? '☀️' : '🌙';
-            
-            // Save preference to localStorage (if available)
+
             try {
                 localStorage.setItem('darkMode', isDarkMode);
             } catch (e) {
